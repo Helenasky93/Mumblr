@@ -1,2 +1,2 @@
-# HelenasTumblr
+# Yummblr
 tumblr clone (fullstack project)
