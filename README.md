@@ -1,2 +1,2 @@
-# Yummblr
+# Mumblr
 tumblr clone (fullstack project)
