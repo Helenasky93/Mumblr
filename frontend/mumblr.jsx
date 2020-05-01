@@ -1,19 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as sessionApiUtil from './util/session_api_util'
 import configureStore from './store/store'
+import Root from './root'
+import * as sessionApiUtil from './util/session_api_util'
+import {login} from './actions/session_actions';
 
 document.addEventListener('DOMContentLoaded', () => {
     // testing
-    window.logout = sessionApiUtil.logout;
-    window.login = sessionApiUtil.login;
-    window.signup = sessionApiUtil.signup;
+    
     
     //end of testing
 
     
-    const store = configureStore();
-    window.store = store;
+    let store;
+    if (window.currentUser) {
+        const preloadedState = {
+            session: { id: window.currentUser.id },
+            entities: {
+                users: { [window.currentUser.id]: window.currentUser }
+            }
+        };
+        store = configureStore(preloadedState);
+        delete window.currentUser;
+    } else {
+        store = configureStore();
+    }
+   
     const root = document.getElementById('root');
-    ReactDOM.render(<h1>Welcome to Mumblr</h1>, root)
+    ReactDOM.render(<Root store={store}/>, root)
 })
