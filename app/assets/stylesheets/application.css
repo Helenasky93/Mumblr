@@ -14,6 +14,11 @@
  *= require_self
  */
 
- * {
-     color: red;
+ .tumblrLogo {
+     text-align: center;
+     font-family: "Helvetica Neue";
+ }
+ .authLinks {
+     margin: auto;
+     text-align: center;
  }
