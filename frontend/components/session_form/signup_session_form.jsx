@@ -41,26 +41,26 @@ class signupSessionForm extends React.Component {
         return (
             <div>
                  
-                <p>{this.props.navLink}</p>
-                <form onSubmit={this.handleSubmit}>
+                {/* <p>{this.props.navLink}</p> */}
+                <form className='signupForm' onSubmit={this.handleSubmit}>
                     {this.renderErrors()}
                     <div>
                         <br/>
-                        <label>Email:
+                        <label id='email'>Email:
                             <input 
                             type="text"
                             value={this.state.email}
                             onChange={this.update('email')}
                              />
                         </label>
-                        <label>Username:
+                        <label id='username'>Username:
                             <input 
                             type="text"
                             value={this.state.username}
                             onChange={this.update('username')}
                              />
                         </label>
-                        <label>Password:
+                        <label id='password'>Password:
                             <input 
                             type="password"
                             value={this.state.password}
@@ -68,7 +68,7 @@ class signupSessionForm extends React.Component {
                              />
                         </label>
                         <br/>
-                        <input type="submit" value={this.props.formType}/>
+                        <button className='signupButton' value={this.props.formType}>{this.props.formType}</button>
                     </div>
                 </form>
             </div>

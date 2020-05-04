@@ -13,12 +13,146 @@
  *= require_tree .
  *= require_self
  */
+ * {
+     box-sizing: border-box;
+     font-family: "Helvetica Neue";
 
+ }
  .tumblrLogo {
      text-align: center;
      font-family: "Helvetica Neue";
+     font-size: 50px;
  }
  .authLinks {
      margin: auto;
      text-align: center;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
  }
+ .subHeading {
+     text-align: center;
+     font-family: "Helvetica Neue";
+     font-size: 16px;
+ }
+
+ .login, .signup {
+      
+    display: block;
+    border: solid black;
+    margin: 5px;
+    width: 100px;
+    text-decoration: none;
+    color: black;
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 5px;
+    font-family: "Helvetica Neue";
+       
+ }
+
+ 
+
+ .login {
+    background-color: #FFF8DC;
+ }
+ .signup {
+    background-color: #FFB6C1;
+    color: cornsilk;
+ }
+
+
+.loginForm, .signupForm {
+    display: flex ;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginForm input, .signupForm input {
+    display: block;
+    border: none;
+    margin: 0;
+    width: 100px;
+    text-decoration: none;
+    color: black;
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 5px;
+    font-family: "Helvetica Neue";
+    background-color: #FFF8DC;
+    
+}
+::placeholder {
+    font-family: "Helvetica Neue";
+     font-size: 16px;
+}
+input:focus {
+    outline-color: darkmagenta;
+}
+
+.loginButton {
+    display: block;
+    border: solid;
+    margin: 0;
+    width: 100px;
+    text-decoration: none;
+    color: black;
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 5px;
+    font-family: "Helvetica Neue";
+    outline-color: darkmagenta;
+    font-size: 16px;
+    background-color: #BA55D3;
+}
+.signupButton {
+     display: block;
+    border: solid;
+    margin: 0;
+    width: 100px;
+    text-decoration: none;
+    color: black;
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 5px;
+    font-family: "Helvetica Neue";
+    outline-color: darkmagenta;
+    font-size: 16px;
+    background-color: #BA55D3;
+}
+
+#usernameLogin {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: solid;
+    border-width: thin;
+
+}
+
+#passwordLogin {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+   border-left: solid;
+   border-right: solid;
+   border-bottom: solid;
+    border-width: thin;
+    
+}
+
+
+body {
+    background-image: url(./mumblr_landing_background.jpg);
+	background-image: asset-data-url("dream7.jpeg");
+	height: 100vh;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}

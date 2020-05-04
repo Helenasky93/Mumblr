@@ -5,15 +5,17 @@ import {Link} from 'react-router-dom';
 const Greeting = ({currentUser, logout}) => {
     const sessionLinks = () => (<>
         <div>
-            <h1 className='tumblrLogo'>tumblr</h1>
+            <h1 className='tumblrLogo'>mumblr</h1>
             <h2 className='subHeading'>
                 Come for what you love. <br/>
                 Stay for what you discover.
                 </h2>
             <div className="authLinks">
-            <Link to='/login'>Login</Link>
-            <br/>
-            <Link to='/signup'>Sign up!</Link>
+               
+                <Link to='/login' className='login'>Login</Link>
+                
+                <Link to='/signup' className='signup'>Sign up!</Link>
+              
             </div>
         </div>
     </>);

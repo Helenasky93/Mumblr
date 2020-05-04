@@ -41,29 +41,33 @@ class loginSessionForm extends React.Component {
     };
     render() {
         return (
-            <div>
-                <p>{this.props.navLink}</p>
-                <form onSubmit={this.handleSubmit}>
+            <div className='loginFormDiv'>
+                {/* <p>{this.props.navLink}</p> */}
+                <form className='loginForm' onSubmit={this.handleSubmit}>
                     {this.renderErrors()}
-                    <div>
-                        <br />
-                        <label>Username:
+                   
+                       
+                        <label>
                             <input
                                 type="text"
+                                id='usernameLogin'
+                                placeholder='username'
                                 value={this.state.username}
                                 onChange={this.update('username')}
                             />
                         </label>
-                        <label>Password:
+                        <label>
                             <input
                                 type="password"
+                                id='passwordLogin'
+                                placeholder='password'
                                 value={this.state.password}
                                 onChange={this.update('password')}
                             />
                         </label>
-                        <br />
-                        <input type="submit" value={this.props.formType} />
-                    </div>
+                    
+                    <button className='loginButton'>{this.props.formType}</button>
+                   
                 </form>
             </div>
         )
