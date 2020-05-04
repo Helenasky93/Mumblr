@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/store'
 import Root from './root'
-import * as sessionApiUtil from './util/session_api_util'
-import {login} from './actions/session_actions';
+import * as postApiUtil from './util/post_api_util'
 
 document.addEventListener('DOMContentLoaded', () => {
     // testing
-    
+    window.fetchAllPosts = postApiUtil.fetchAllPosts;
+    window.createPost = postApiUtil.createPost;
     
     //end of testing
 
