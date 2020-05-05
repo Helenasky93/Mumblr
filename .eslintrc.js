@@ -4,9 +4,9 @@ module.exports = {
         "es6": true
     },
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:react-redux/recommended"
+        // "eslint:recommended",
+        // "plugin:react/recommended",
+        // "plugin:react-redux/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -24,6 +24,7 @@ module.exports = {
         "react-redux"
     ],
     "rules": {
+        "no-case-declarations": "off",
         "react/prop-types": "off",
         "react-redux/mapDispatchToProps-prefer-shorthand": "off"
     }

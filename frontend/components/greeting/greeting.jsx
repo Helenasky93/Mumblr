@@ -28,7 +28,7 @@ const Greeting = ({currentUser, logout}) => {
         </hgroup>
         );
     };
-    console.log(currentUser);
+    
 
     return currentUser ? personalGreeting() : sessionLinks();
     // return personalGreeting();
