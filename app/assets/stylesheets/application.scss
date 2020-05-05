@@ -149,8 +149,7 @@ input:focus {
 
 
 body {
-    background-image: url(./mumblr_landing_background.jpg);
-	background-image: asset-data-url("dream7.jpeg");
+    background-image: image-url('mumblr_landing_background.jpg');
 	height: 100vh;
 	background-position: center;
 	background-repeat: no-repeat;
