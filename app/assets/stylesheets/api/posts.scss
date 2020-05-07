@@ -1,3 +1,28 @@
 // Place all the styles related to the api/posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.postBox {
+    display: grid;
+    grid-template-rows: 90px 1fr;
+    background-color: white;
+    border-radius: 3px;
+    margin: 10px;
+}
+.body {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}

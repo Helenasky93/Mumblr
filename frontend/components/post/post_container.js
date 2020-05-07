@@ -1,4 +1,4 @@
-import connect from 'react-redux';
+import {connect} from 'react-redux';
 import Post from './post';
 
 const mstp = (state,ownProps) => {

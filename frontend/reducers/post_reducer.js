@@ -8,8 +8,10 @@ const postReducer =  (oldState = {}, action) => {
     Object.freeze(oldState);
     switch (action.type) {
         case RECEIVE_ALL_POSTS:
+            console.log(action.posts);
+            let postsArray = Object.values(action.posts)
             const posts = {};
-            action.posts.array.forEach(post => {
+            postsArray.forEach(post => {
                 posts[post.id] = post
             });
             return posts;

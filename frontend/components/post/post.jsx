@@ -11,9 +11,16 @@ class Post extends React.Component {
     render() {
         let post = this.props.post
         return (
-            <div>
-                
+            <div key ={post.id} className='postContainer'>
+                <div className='postBox'>
+                    <div className='postTop'>
+                        <div className='title'>{post.title}</div>
+                        <div className='body'>{post.body}</div>
+                    </div>
+                </div>
             </div>
         )
     }
 }
+
+export default Post;
