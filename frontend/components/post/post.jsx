@@ -1,4 +1,5 @@
 import React from 'react';
+import EditPostForm from '../post_forms/edit_post_form_container'
 
 class Post extends React.Component {
     constructor(props) {
@@ -18,6 +19,8 @@ class Post extends React.Component {
                         <div className='body'>{post.body}</div>
                     </div>
                 </div>
+                <EditPostForm post={post}/>
+                <button onClick={() => this.props.deletePost(post.id)}>Delete Post</button>
             </div>
         )
     }

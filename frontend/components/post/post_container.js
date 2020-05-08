@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 import Post from './post';
+import {deletePost} from '../../actions/post_actions'
 
 const mstp = (state,ownProps) => {
     const authorId = ownProps.post.author_id;
@@ -10,4 +11,10 @@ const mstp = (state,ownProps) => {
     }
 };
 
-export default connect(mstp)(Post);
+const mdtp = dispatch => {
+    return {
+        deletePost:(postId) => dispatch(deletePost(postId))
+    }
+}
+
+export default connect(mstp,mdtp)(Post);
