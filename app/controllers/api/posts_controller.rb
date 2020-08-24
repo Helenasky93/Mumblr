@@ -23,11 +23,10 @@ class Api::PostsController < ApplicationController
 
     def update
         @post = Post.find(params[:id])
-        puts @post
-        if @post.update(post_params)
+        if (@post && update(post_params))
             render :show
         else
-            render json: @post.errors.full_messages, status: 422
+            render :show
         end
         
     end

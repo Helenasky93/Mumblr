@@ -3,49 +3,32 @@ import React from 'react';
 class PostForm extends React.Component {
     constructor(props) {
         super(props);
-        let postId;
-        if(this.props.post) {
-            postId = this.props.post.id;
-        } else {
-            postId = null
-        };
         this.state = ({
             title:'',
             body: '',
-            post_type: '',
-            id: postId
-
+            post_type: ''
         })
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.post = this.props.post || {id: 'create'}
 
     };
 
     handleSubmit(e) {
         e.preventDefault();
-        // if(this.post.id !== 'create') {
-        //     this.props.action({...this.state, id: this.post.id});
-        // } else {
-        //     this.props.action(this.state);
-        // };
-        // debugger
-        this.props.action(this.state);
-        let modal = document.getElementById('modal' + this.post.id);
-
+        this.props.createPost(this.state);
         modal.style.display = 'none';
 
     }
 
     handleChange(field) {
         
-    
+        console.log(this.state);
         return e => this.setState({[field]: e.currentTarget.value})
     }
 
     componentDidMount() {
-        let modal = document.getElementById('modal' + this.post.id);
-        let button = document.getElementById('modalButton' + this.post.id);
-        let span = document.getElementById('closeModal' + this.post.id);
+        let modal = document.getElementById('modal');
+        let button = document.getElementById('modalButton');
+        let span = document.getElementById('closeModal');
         button.onclick = () => modal.style.display = 'block';
         span.onclick = () => modal.style.display = 'none';
         window.onclick = (e) => {
@@ -61,8 +44,8 @@ class PostForm extends React.Component {
 
         return (
             <>
-            <button className='modalButton' id={'modalButton' + this.post.id}>{this.props.formType}</button>
-            <div id={'modal' + this.post.id} className='newPostFormDiv'>
+            <button id='modalButton'>Create new Post</button>
+            <div id='modal' className='newPostFormDiv'>
                 <form onSubmit={this.handleSubmit} className='newPostForm'>
                     <label>Title
                         <input className='postFormTitle' onChange={this.handleChange('title')} type="text" value={this.state.title}/>
@@ -73,8 +56,8 @@ class PostForm extends React.Component {
                     <label>Type
                         <input onChange={this.handleChange('post_type')} type="text" value={this.state.post_type}/>
                     </label>
-        <button className='newPostFormButton'>{this.props.formType}</button>
-                <span id={'closeModal' + this.post.id}>Cancel</span>
+                    <button className='newPostFormButton'>Create Post</button>
+                <span id='closeModal'>Cancel</span>
                 </form>
             </div>
             </>
