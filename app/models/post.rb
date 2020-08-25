@@ -16,6 +16,8 @@ class Post < ApplicationRecord
     foreign_key: :author_id,
     class_name: :User
 
+    has_one_attached :file
+
     POST_TYPES = %w(text photo video).freeze
     validates :post_type, inclusion: POST_TYPES
 
