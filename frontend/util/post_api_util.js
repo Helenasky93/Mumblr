@@ -5,6 +5,7 @@ export const fetchAllPosts = () => {
     })
 };
 
+
 export const fetchSinglePost = (postId) => {
     return $.ajax({
         method:'GET',
@@ -12,13 +13,16 @@ export const fetchSinglePost = (postId) => {
     })
 };
 
-export const createPost = (post) => {
+export const createPost = (formData) => {
     return $.ajax({
         method:'POST',
         url:'/api/posts',
-        data: {post}
+        data: formData,
+        contentType: false,
+        processData: false
     })
 };
+
 
 export const updatePost = post => {
     // debugger

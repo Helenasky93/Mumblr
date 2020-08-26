@@ -13,6 +13,7 @@ class Api::PostsController < ApplicationController
 
     def create
         @post = Post.new(post_params)
+        # debugger
         @post.author_id = current_user.id
         if @post.save
             render :show
@@ -41,6 +42,7 @@ class Api::PostsController < ApplicationController
     private 
 
     def post_params
-        params.require(:post).permit(:title,:body,:post_type)
+        params.require(:post).permit(:title,:body,:post_type, :file)
+        
     end
 end

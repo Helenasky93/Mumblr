@@ -17,6 +17,7 @@ class Post extends React.Component {
                     <div className='postTop'>
                         <div className='title'>{post.title}</div>
                         <div className='body'>{post.body}</div>
+                        <img className="image" src={post.file_url} alt="showImage"/>
                     </div>
                 </div>
                 <EditPostForm post={post}/>

@@ -27,7 +27,9 @@ const removePost = postId => {
 
 export const fetchAllPosts = () => dispatch => {
     postApiUtil.fetchAllPosts()
-    .then(posts => dispatch(receiveAllPosts(posts)))
+    .then(posts => {
+        dispatch(receiveAllPosts(posts))
+    })
 };
 
 export const fetchSinglePost = (postId) => dispatch => {

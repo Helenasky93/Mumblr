@@ -18,8 +18,9 @@
 	grid-row-start: 3;
 	grid-row-end: 4;
 	width: 625px;
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-columns: auto;
+	// flex-direction: column;
 }
 
 .title {

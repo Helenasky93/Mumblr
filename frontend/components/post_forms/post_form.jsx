@@ -13,13 +13,31 @@ class PostForm extends React.Component {
             title:'',
             body: '',
             post_type: '',
-            id: postId
+            id: postId,
+            fileUrl: '',
+            file: ''
 
         })
         this.handleSubmit = this.handleSubmit.bind(this);
         this.post = this.props.post || {id: 'create'}
 
     };
+
+    handleFile(e) {
+        e.preventDefault();
+
+        const reader = new FileReader();
+        const file = e.currentTarget.files[0];
+        reader.onloadend = () =>
+            this.setState({ fileUrl: reader.result, file: file });
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            this.setState({ fileUrl: "", file: null });
+        }
+        this.setState({file: e.currentTarget.files[0]});
+    }
 
     handleSubmit(e) {
         e.preventDefault();
@@ -29,16 +47,36 @@ class PostForm extends React.Component {
         //     this.props.action(this.state);
         // };
         // debugger
-        this.props.action(this.state);
+        const formData = new FormData();
+        formData.append('post[title]', this.state.title);
+        formData.append('post[body]', this.state.body);
+        formData.append('post[post_type]', this.state.post_type);
+        formData.append('post[file]', this.state.file);
+        // put fileurl appending in if/else statement just in case
+        // posts are created without a file
+        formData.append('post[fileURL]', this.state.fileURL);
+        // debugger
+        
+        this.props.action(formData);
         let modal = document.getElementById('modal' + this.post.id);
-
+        
         modal.style.display = 'none';
 
     }
 
+
     handleChange(field) {
         
-    
+        // const reader = new FileReader();
+        // const file = field.files[0];
+        // reader.onloadend = () =>
+        //     this.setState({ fileUrl: reader.result, file: file });
+
+        // if (file) {
+        //     reader.readAsDataURL(file);
+        // } else {
+        //     this.setState({ fileUrl: "", file: null });
+        // }
         return e => this.setState({[field]: e.currentTarget.value})
     }
 
@@ -57,7 +95,7 @@ class PostForm extends React.Component {
 
     render() {
 
-        
+        console.log(this.state);
 
         return (
             <>
@@ -72,6 +110,9 @@ class PostForm extends React.Component {
                     </label>
                     <label>Type
                         <input onChange={this.handleChange('post_type')} type="text" value={this.state.post_type}/>
+                    </label>
+                    <label>File
+                        <input type="file" className="postFormFile" onChange={this.handleFile.bind(this)} />
                     </label>
         <button className='newPostFormButton'>{this.props.formType}</button>
                 <span id={'closeModal' + this.post.id}>Cancel</span>

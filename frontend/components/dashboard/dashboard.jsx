@@ -15,7 +15,11 @@ class Dashboard extends React.Component {
         let posts = this.props.posts;
         let showPosts = posts.map((post,idx) => {
             return (
-                <Post key={idx} post={post}/>
+                <div>
+                    <Post key={idx} post={post}/>
+                    <br/>
+
+                </div>
             )
         })
         return (

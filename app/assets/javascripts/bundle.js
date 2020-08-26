@@ -133,7 +133,7 @@ var removePost = function removePost(postId) {
 var fetchAllPosts = function fetchAllPosts() {
   return function (dispatch) {
     _util_post_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchAllPosts"]().then(function (posts) {
-      return dispatch(receiveAllPosts(posts));
+      dispatch(receiveAllPosts(posts));
     });
   };
 };
@@ -336,10 +336,10 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var posts = this.props.posts;
       var showPosts = posts.map(function (post, idx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_post_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_post_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: idx,
           post: post
-        });
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
@@ -548,7 +548,11 @@ var Post = /*#__PURE__*/function (_React$Component) {
         className: "title"
       }, post.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "body"
-      }, post.body))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_edit_post_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, post.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "image",
+        src: post.file_url,
+        alt: "showImage"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_edit_post_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         post: post
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
@@ -779,7 +783,9 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
       title: '',
       body: '',
       post_type: '',
-      id: postId
+      id: postId,
+      fileUrl: '',
+      file: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.post = _this.props.post || {
@@ -789,6 +795,35 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(PostForm, [{
+    key: "handleFile",
+    value: function handleFile(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var reader = new FileReader();
+      var file = e.currentTarget.files[0];
+
+      reader.onloadend = function () {
+        return _this2.setState({
+          fileUrl: reader.result,
+          file: file
+        });
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        this.setState({
+          fileUrl: "",
+          file: null
+        });
+      }
+
+      this.setState({
+        file: e.currentTarget.files[0]
+      });
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault(); // if(this.post.id !== 'create') {
@@ -798,17 +833,35 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
       // };
       // debugger
 
-      this.props.action(this.state);
+      var formData = new FormData();
+      formData.append('post[title]', this.state.title);
+      formData.append('post[body]', this.state.body);
+      formData.append('post[post_type]', this.state.post_type);
+      formData.append('post[file]', this.state.file); // put fileurl appending in if/else statement just in case
+      // posts are created without a file
+
+      formData.append('post[fileURL]', this.state.fileURL); // debugger
+
+      this.props.action(formData);
       var modal = document.getElementById('modal' + this.post.id);
       modal.style.display = 'none';
     }
   }, {
     key: "handleChange",
     value: function handleChange(field) {
-      var _this2 = this;
+      var _this3 = this;
 
+      // const reader = new FileReader();
+      // const file = field.files[0];
+      // reader.onloadend = () =>
+      //     this.setState({ fileUrl: reader.result, file: file });
+      // if (file) {
+      //     reader.readAsDataURL(file);
+      // } else {
+      //     this.setState({ fileUrl: "", file: null });
+      // }
       return function (e) {
-        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+        return _this3.setState(_defineProperty({}, field, e.currentTarget.value));
       };
     }
   }, {
@@ -835,6 +888,7 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      console.log(this.state);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "modalButton",
         id: 'modalButton' + this.post.id
@@ -858,6 +912,10 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
         onChange: this.handleChange('post_type'),
         type: "text",
         value: this.state.post_type
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "File", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        className: "postFormFile",
+        onChange: this.handleFile.bind(this)
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "newPostFormButton"
       }, this.props.formType), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -1593,13 +1651,13 @@ var fetchSinglePost = function fetchSinglePost(postId) {
     url: "/api/posts/".concat(postId)
   });
 };
-var createPost = function createPost(post) {
+var createPost = function createPost(formData) {
   return $.ajax({
     method: 'POST',
     url: '/api/posts',
-    data: {
-      post: post
-    }
+    data: formData,
+    contentType: false,
+    processData: false
   });
 };
 var updatePost = function updatePost(post) {
