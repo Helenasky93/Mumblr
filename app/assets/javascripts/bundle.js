@@ -537,6 +537,25 @@ var Post = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var post = this.props.post;
+      var media;
+
+      if (post.post_type === "photo") {
+        media = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "image",
+          src: post.file_url,
+          alt: "showImage"
+        });
+      } else if (post.post_type === "video") {
+        media = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+          className: "video",
+          src: post.file_url,
+          width: "320",
+          height: "240",
+          controls: true,
+          type: "video"
+        });
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         key: post.id,
         className: "postContainer"
@@ -548,11 +567,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
         className: "title"
       }, post.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "body"
-      }, post.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "image",
-        src: post.file_url,
-        alt: "showImage"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_edit_post_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, post.body), media)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_edit_post_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         post: post
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
@@ -784,7 +799,7 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
       body: '',
       post_type: '',
       id: postId,
-      fileUrl: '',
+      fileURL: '',
       file: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -840,7 +855,7 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
       formData.append('post[file]', this.state.file); // put fileurl appending in if/else statement just in case
       // posts are created without a file
 
-      formData.append('post[fileURL]', this.state.fileURL); // debugger
+      formData.append('post[file_url]', this.state.fileURL); // debugger
 
       this.props.action(formData);
       var modal = document.getElementById('modal' + this.post.id);

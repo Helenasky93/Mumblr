@@ -14,7 +14,7 @@ class PostForm extends React.Component {
             body: '',
             post_type: '',
             id: postId,
-            fileUrl: '',
+            fileURL: '',
             file: ''
 
         })
@@ -54,7 +54,7 @@ class PostForm extends React.Component {
         formData.append('post[file]', this.state.file);
         // put fileurl appending in if/else statement just in case
         // posts are created without a file
-        formData.append('post[fileURL]', this.state.fileURL);
+        formData.append('post[file_url]', this.state.fileURL);
         // debugger
         
         this.props.action(formData);
