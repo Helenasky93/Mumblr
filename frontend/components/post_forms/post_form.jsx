@@ -51,17 +51,31 @@ class PostForm extends React.Component {
         formData.append('post[title]', this.state.title);
         formData.append('post[body]', this.state.body);
         formData.append('post[post_type]', this.state.post_type);
-        formData.append('post[file]', this.state.file);
-        // put fileurl appending in if/else statement just in case
-        // posts are created without a file
-        formData.append('post[file_url]', this.state.fileURL);
-        // debugger
+        if (this.state.post_type !== "text") {
+            formData.append('post[file]', this.state.file);
+            // put fileurl appending in if/else statement just in case
+            // posts are created without a file
+            formData.append('post[file_url]', this.state.fileURL);
+            // debugger
+
+        };
+
         
         this.props.action(formData);
         let modal = document.getElementById('modal' + this.post.id);
+
         
         modal.style.display = 'none';
 
+        this.setState({
+            title: '',
+            body: '',
+            post_type: '',
+            id: '',
+            fileURL: '',
+            file: ''
+        });
+        document.querySelector(`#modal${this.post.id} form`).reset();
     }
 
 
@@ -95,21 +109,29 @@ class PostForm extends React.Component {
 
     render() {
 
-        console.log(this.state);
+        console.log('hiiii', this.state, this.props);
 
         return (
             <>
             <button className='modalButton' id={'modalButton' + this.post.id}>{this.props.formType}</button>
             <div id={'modal' + this.post.id} className='newPostFormDiv'>
                 <form onSubmit={this.handleSubmit} className='newPostForm'>
-                    <label>Title
-                        <input className='postFormTitle' onChange={this.handleChange('title')} type="text" value={this.state.title}/>
+                        <label>Title
+                        <input className='postFormTitle' onChange={this.handleChange('title')} type="text" value={this.state.title || this.props?.post?.title} />
                     </label>
                     <label>Body
-                        <input className='postFormBody' onChange={this.handleChange('body')} type="description" value={this.state.body}/>
+                        <input className='postFormBody' onChange={this.handleChange('body')} type="description" value={this.state.body || this.props?.post?.body} />
                     </label>
                     <label>Type
-                        <input onChange={this.handleChange('post_type')} type="text" value={this.state.post_type}/>
+
+                        <select name="type" className="postFormPostType" value={this.state.post_type || this.props?.post?.post_type}  onChange={this.handleChange('post_type')}>
+                            <option selected value=""></option>
+                            <option value="text">Text</option>
+                            <option value="photo">Photo</option>
+                            <option value="video">Video</option>
+                        </select>
+                        
+                        {/* <input onChange={this.handleChange('post_type')} type="text" value={this.state.post_type || this.props?.post?.post_type} /> */}
                     </label>
                     <label>File
                         <input type="file" className="postFormFile" onChange={this.handleFile.bind(this)} />

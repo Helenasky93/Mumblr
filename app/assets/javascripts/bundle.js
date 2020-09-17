@@ -854,14 +854,27 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
       formData.append('post[title]', this.state.title);
       formData.append('post[body]', this.state.body);
       formData.append('post[post_type]', this.state.post_type);
-      formData.append('post[file]', this.state.file); // put fileurl appending in if/else statement just in case
-      // posts are created without a file
 
-      formData.append('post[file_url]', this.state.fileURL); // debugger
+      if (this.state.post_type !== "text") {
+        formData.append('post[file]', this.state.file); // put fileurl appending in if/else statement just in case
+        // posts are created without a file
 
+        formData.append('post[file_url]', this.state.fileURL); // debugger
+      }
+
+      ;
       this.props.action(formData);
       var modal = document.getElementById('modal' + this.post.id);
       modal.style.display = 'none';
+      this.setState({
+        title: '',
+        body: '',
+        post_type: '',
+        id: '',
+        fileURL: '',
+        file: ''
+      });
+      document.querySelector("#modal".concat(this.post.id, " form")).reset();
     }
   }, {
     key: "handleChange",
@@ -905,7 +918,9 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state);
+      var _this$props, _this$props$post, _this$props2, _this$props2$post, _this$props3, _this$props3$post;
+
+      console.log('hiiii', this.state, this.props);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "modalButton",
         id: 'modalButton' + this.post.id
@@ -919,17 +934,27 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
         className: "postFormTitle",
         onChange: this.handleChange('title'),
         type: "text",
-        value: this.state.title
+        value: this.state.title || ((_this$props = this.props) === null || _this$props === void 0 ? void 0 : (_this$props$post = _this$props.post) === null || _this$props$post === void 0 ? void 0 : _this$props$post.title)
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "postFormBody",
         onChange: this.handleChange('body'),
         type: "description",
-        value: this.state.body
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Type", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        onChange: this.handleChange('post_type'),
-        type: "text",
-        value: this.state.post_type
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "File", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        value: this.state.body || ((_this$props2 = this.props) === null || _this$props2 === void 0 ? void 0 : (_this$props2$post = _this$props2.post) === null || _this$props2$post === void 0 ? void 0 : _this$props2$post.body)
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Type", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "type",
+        className: "postFormPostType",
+        value: this.state.post_type || ((_this$props3 = this.props) === null || _this$props3 === void 0 ? void 0 : (_this$props3$post = _this$props3.post) === null || _this$props3$post === void 0 ? void 0 : _this$props3$post.post_type),
+        onChange: this.handleChange('post_type')
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        selected: true,
+        value: ""
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "text"
+      }, "Text"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "photo"
+      }, "Photo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "video"
+      }, "Video"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "File", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "file",
         className: "postFormFile",
         onChange: this.handleFile.bind(this)
