@@ -24,7 +24,7 @@ class Dashboard extends React.Component {
         })
         return (
             <div className='dashboard'>
-                <hgroup>
+                <hgroup class='greetingBox'>
                     <h2>Hi, {(this.props.currentUser.username)}!</h2>
                     <button onClick={this.props.logout}>Log Out</button>
                 </hgroup>
