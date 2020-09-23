@@ -4,12 +4,33 @@ import EditPostForm from '../post_forms/edit_post_form_container'
 class Post extends React.Component {
     constructor(props) {
         super(props);
-        this.state = ({
-            author: null || this.props.author
-        })
+
+        this.state = {
+            author: this.props.author,
+            liked:  this.props.liked
+        }
+        
+        this.toggleLike = this.toggleLike.bind(this);
     }
 
+    componentDidUpdate(prevState) {
+        if (this.props.liked != prevState.liked ) {
+            this.setState({liked: this.props.liked})
+        }
+    }
+
+    toggleLike() {
+        const post = this.props.post;
+        // debugger
+        if (this.state.liked) {
+            this.props.unlikePost(post.id);
+        } else {
+            this.props.likePost(post.id);
+        };
+    };
+
     render() {
+        console.warn(this.state, this.props)
         let post = this.props.post
         let media;
         if (post.post_type === "photo") {
@@ -28,6 +49,9 @@ class Post extends React.Component {
                 </div>
                 <EditPostForm post={post}/>
                 <button onClick={() => this.props.deletePost(post.id)}>Delete Post</button>
+        <button onClick={this.toggleLike}>
+            {this.state.liked ? 'Unlike' : 'Like'}
+        </button>
             </div>
         )
     }
