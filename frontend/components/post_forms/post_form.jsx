@@ -113,9 +113,6 @@ class PostForm extends React.Component {
     }
 
     render() {
-
-        // console.log('hiiii', this.state, this.props);
-
         return (
             <>
             <button className='modalButton' id={'modalButton' + this.post.id}>{this.props.formType}</button>

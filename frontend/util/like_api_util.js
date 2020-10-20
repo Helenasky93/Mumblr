@@ -1,19 +1,19 @@
 export const fetchAllLikes = () => {
-    $.ajax({
+    return $.ajax({
         url:'api/likes',
         method:'GET'
     })
 }
 
 export const receiveLike = (id) => {
-    $.ajax({
+    return $.ajax({
         url:`api/likes/${id}`,
         method:'GET'
     })
 }
 
 export const likePost = (id) => {
-    $.ajax({
+    return $.ajax({
         url:'api/likes',
         method:'POST',
         data: {id}
@@ -21,8 +21,8 @@ export const likePost = (id) => {
 }
 
 export const unlikePost = (id) => {
-    $.ajax({
-        url:`api/likes${id}`,
+    return $.ajax({
+        url:`api/likes/${id}`,
         method:'DELETE',
         data:{id}
     })
