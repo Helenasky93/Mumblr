@@ -48,6 +48,8 @@ class PostForm extends React.Component {
         // };
         // debugger
         const formData = new FormData();
+        // debugger
+        
         formData.append('post[title]', this.state.title);
         formData.append('post[body]', this.state.body);
         formData.append('post[post_type]', this.state.post_type);
@@ -59,8 +61,11 @@ class PostForm extends React.Component {
             // debugger
 
         };
+        if (this.props.formType === 'Update Post') {
+            formData.append('post[id]', this.state.id);
+            
 
-        
+        };
         this.props.action(formData);
         let modal = document.getElementById('modal' + this.post.id);
 
@@ -109,7 +114,7 @@ class PostForm extends React.Component {
 
     render() {
 
-        console.log('hiiii', this.state, this.props);
+        // console.log('hiiii', this.state, this.props);
 
         return (
             <>

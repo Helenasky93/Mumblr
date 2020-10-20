@@ -850,7 +850,8 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
       // };
       // debugger
 
-      var formData = new FormData();
+      var formData = new FormData(); // debugger
+
       formData.append('post[title]', this.state.title);
       formData.append('post[body]', this.state.body);
       formData.append('post[post_type]', this.state.post_type);
@@ -863,7 +864,14 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
       }
 
       ;
-      this.props.action(formData);
+
+      if (this.props.formType === 'Update Post') {
+        this.props.action(this.state);
+      } else {
+        this.props.action(formData);
+      }
+
+      ;
       var modal = document.getElementById('modal' + this.post.id);
       modal.style.display = 'none';
       this.setState({
@@ -920,7 +928,7 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this$props, _this$props$post, _this$props2, _this$props2$post, _this$props3, _this$props3$post;
 
-      console.log('hiiii', this.state, this.props);
+      // console.log('hiiii', this.state, this.props);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "modalButton",
         id: 'modalButton' + this.post.id
@@ -1703,13 +1711,15 @@ var createPost = function createPost(formData) {
   });
 };
 var updatePost = function updatePost(post) {
-  // debugger
+  debugger;
   return $.ajax({
     method: 'PATCH',
     url: "/api/posts/".concat(post.id),
     data: {
       post: post
-    }
+    },
+    contentType: false,
+    processData: false
   });
 };
 var deletePost = function deletePost(postId) {
