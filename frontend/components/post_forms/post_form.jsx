@@ -6,18 +6,37 @@ class PostForm extends React.Component {
         let postId;
         if(this.props.post) {
             postId = this.props.post.id;
-        } else {
-            postId = null
-        };
-        this.state = ({
-            title:'',
-            body: '',
-            post_type: '',
-            id: postId,
-            fileURL: '',
-            file: ''
+            this.state = {
+                title: this.props.post.title,
+                body: this.props.post.body,
+                post_type: this.props.post_type,
+                id: this.props.post.id,
+                fileUrl: this.props.post.fileUrl,
+                file: this.props.post.file
 
-        })
+            }
+        } else {
+            postId = null;
+            this.state = {
+                title: '',
+                body: '',
+                post_type: '',
+                id: postId,
+                fileUrl: '',
+                file: ''
+
+            }
+        };
+        // this.state = ({
+        //     title:'',
+        //     body: '',
+        //     post_type: '',
+        //     id: postId,
+        //     fileURL: '',
+        //     file: ''
+
+        // })
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.post = this.props.post || {id: 'create'}
 
@@ -57,15 +76,16 @@ class PostForm extends React.Component {
             formData.append('post[file]', this.state.file);
             // put fileurl appending in if/else statement just in case
             // posts are created without a file
-            formData.append('post[file_url]', this.state.fileURL);
+            formData.append('post[file_url]', this.state.fileUrl);
             // debugger
 
         };
         if (this.props.formType === 'Update Post') {
             formData.append('post[id]', this.state.id);
             
-
+            debugger
         };
+    
         this.props.action(formData);
         let modal = document.getElementById('modal' + this.post.id);
 
@@ -119,15 +139,15 @@ class PostForm extends React.Component {
             <div id={'modal' + this.post.id} className='newPostFormDiv'>
                 <form onSubmit={this.handleSubmit} className='newPostForm'>
                         <label>Title
-                        <input className='postFormTitle' onChange={this.handleChange('title')} type="text" value={this.state.title || this.props?.post?.title} />
+                        <input className='postFormTitle' onChange={this.handleChange('title')} type="text" value={this.state.title} />
                     </label>
                     <label>Body
-                        <input className='postFormBody' onChange={this.handleChange('body')} type="description" value={this.state.body || this.props?.post?.body} />
+                        <input className='postFormBody' onChange={this.handleChange('body')} type="description" value={this.state.body} />
                     </label>
                     <label>Type
 
-                        <select name="type" className="postFormPostType" value={this.state.post_type || this.props?.post?.post_type}  onChange={this.handleChange('post_type')}>
-                            <option selected value=""></option>
+                        <select name="type" className="postFormPostType"  value={this.state.post_type}  onChange={this.handleChange('post_type')}>
+                            <option value=""></option>
                             <option value="text">Text</option>
                             <option value="photo">Photo</option>
                             <option value="video">Video</option>

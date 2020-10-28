@@ -16,7 +16,7 @@ class Dashboard extends React.Component {
         let posts = this.props.posts;
         let showPosts = posts.map((post,idx) => {
             return (
-                <div>
+                <div key={idx}>
                     <Post key={idx} post={post}/>
                     <br/>
 
@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
         })
         return (
             <div className='dashboard'>
-                <hgroup class='greetingBox'>
+                <hgroup className='greetingBox'>
                     <h2>Hi, {(this.props.currentUser.username)}!</h2>
                     <button onClick={this.props.logout}>Log Out</button>
                 </hgroup>

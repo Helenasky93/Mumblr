@@ -24,12 +24,12 @@ export const createPost = (formData) => {
 };
 
 
-export const updatePost = post => {
+export const updatePost = formData => {
     debugger
     return $.ajax({
         method:'PATCH',
-        url:`/api/posts/${post.id}`,
-        data: {post},
+        url: `/api/posts/${formData.getAll("post[id]")[0]}`,
+        data: formData,
         contentType: false,
         processData: false
     })

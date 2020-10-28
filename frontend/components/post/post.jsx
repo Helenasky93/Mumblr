@@ -30,7 +30,8 @@ class Post extends React.Component {
     };
 
     render() {
-        console.warn(this.state, this.props)
+        console.warn(this.state, this.props, this.props.post.likes)
+
         let post = this.props.post
         let media;
         if (post.post_type === "photo") {

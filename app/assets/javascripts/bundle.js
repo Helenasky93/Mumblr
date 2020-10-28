@@ -402,7 +402,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var posts = this.props.posts;
       var showPosts = posts.map(function (post, idx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_post_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: idx
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_post_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: idx,
           post: post
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
@@ -410,7 +412,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
-        "class": "greetingBox"
+        className: "greetingBox"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Hi, ", this.props.currentUser.username, "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
       }, "Log Out")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_post_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -633,7 +635,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.warn(this.state, this.props);
+      console.warn(this.state, this.props, this.props.post.likes);
       var post = this.props.post;
       var media;
 
@@ -905,19 +907,35 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
 
     if (_this.props.post) {
       postId = _this.props.post.id;
+      _this.state = {
+        title: _this.props.post.title,
+        body: _this.props.post.body,
+        post_type: _this.props.post_type,
+        id: _this.props.post.id,
+        fileUrl: _this.props.post.fileUrl,
+        file: _this.props.post.file
+      };
     } else {
       postId = null;
+      _this.state = {
+        title: '',
+        body: '',
+        post_type: '',
+        id: postId,
+        fileUrl: '',
+        file: ''
+      };
     }
 
-    ;
-    _this.state = {
-      title: '',
-      body: '',
-      post_type: '',
-      id: postId,
-      fileURL: '',
-      file: ''
-    };
+    ; // this.state = ({
+    //     title:'',
+    //     body: '',
+    //     post_type: '',
+    //     id: postId,
+    //     fileURL: '',
+    //     file: ''
+    // })
+
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.post = _this.props.post || {
       id: 'create'
@@ -974,18 +992,18 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
         formData.append('post[file]', this.state.file); // put fileurl appending in if/else statement just in case
         // posts are created without a file
 
-        formData.append('post[file_url]', this.state.fileURL); // debugger
+        formData.append('post[file_url]', this.state.fileUrl); // debugger
       }
 
       ;
 
       if (this.props.formType === 'Update Post') {
-        this.props.action(this.state);
-      } else {
-        this.props.action(formData);
+        formData.append('post[id]', this.state.id);
+        debugger;
       }
 
       ;
+      this.props.action(formData);
       var modal = document.getElementById('modal' + this.post.id);
       modal.style.display = 'none';
       this.setState({
@@ -1040,8 +1058,6 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props, _this$props$post, _this$props2, _this$props2$post, _this$props3, _this$props3$post;
-
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "modalButton",
         id: 'modalButton' + this.post.id
@@ -1055,19 +1071,18 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
         className: "postFormTitle",
         onChange: this.handleChange('title'),
         type: "text",
-        value: this.state.title || ((_this$props = this.props) === null || _this$props === void 0 ? void 0 : (_this$props$post = _this$props.post) === null || _this$props$post === void 0 ? void 0 : _this$props$post.title)
+        value: this.state.title
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "postFormBody",
         onChange: this.handleChange('body'),
         type: "description",
-        value: this.state.body || ((_this$props2 = this.props) === null || _this$props2 === void 0 ? void 0 : (_this$props2$post = _this$props2.post) === null || _this$props2$post === void 0 ? void 0 : _this$props2$post.body)
+        value: this.state.body
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Type", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         name: "type",
         className: "postFormPostType",
-        value: this.state.post_type || ((_this$props3 = this.props) === null || _this$props3 === void 0 ? void 0 : (_this$props3$post = _this$props3.post) === null || _this$props3$post === void 0 ? void 0 : _this$props3$post.post_type),
+        value: this.state.post_type,
         onChange: this.handleChange('post_type')
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        selected: true,
         value: ""
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "text"
@@ -1490,7 +1505,8 @@ document.addEventListener('DOMContentLoaded', function () {
   if (window.currentUser) {
     var preloadedState = {
       session: {
-        id: window.currentUser.id
+        id: window.currentUser.id,
+        currentUser: window.currentUser
       },
       entities: {
         users: _defineProperty({}, window.currentUser.id, window.currentUser)
@@ -1917,14 +1933,12 @@ var createPost = function createPost(formData) {
     processData: false
   });
 };
-var updatePost = function updatePost(post) {
+var updatePost = function updatePost(formData) {
   debugger;
   return $.ajax({
     method: 'PATCH',
-    url: "/api/posts/".concat(post.id),
-    data: {
-      post: post
-    },
+    url: "/api/posts/".concat(formData.getAll("post[id]")[0]),
+    data: formData,
     contentType: false,
     processData: false
   });
