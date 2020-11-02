@@ -3,6 +3,7 @@ import * as sessionApiUtil from '../util/session_api_util'
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 export const LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
 export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
+export const RECEIVE_ALL_USERS = 'RECEIVE_ALL_USERS';
 
 export const receiveCurrentUser = currentUser => ({
     type: RECEIVE_CURRENT_USER,
@@ -19,6 +20,11 @@ export const receiveSessionErrors = (errors) => ({
     errors
 });
 
+export const receiveAllUsers = allUsers => ({
+    type: RECEIVE_ALL_USERS,
+    allUsers
+})
+
 export const signup = user => dispatch => {
     return sessionApiUtil.signup(user)
     .then(user => dispatch(receiveCurrentUser(user)),
@@ -34,4 +40,9 @@ export const login = user => dispatch => {
 export const logout = () => dispatch => {
     return sessionApiUtil.logout()
     .then(() => dispatch(logoutCurrentUser()))
+}
+
+export const allUsers = () => dispatch => {
+    return sessionApiUtil.allUsers()
+    .then(users => dispatch(receiveAllUsers(users)))
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Post from '../post/post_container';
-import PostForm from '../post_forms/post_form_container'
+import PostForm from '../post_forms/post_form_container';
+import UsersSidebar from './users_sidebar';
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class Dashboard extends React.Component {
     componentDidMount() {
         this.props.fetchAllPosts();
         this.props.fetchAllLikes();
+        this.props.allUsers();
     }
 
     render() {
@@ -34,6 +36,7 @@ class Dashboard extends React.Component {
                 <div className='leftColumn'>
                     {showPosts}
                 </div>
+                <UsersSidebar allUsers={this.props.users} />
             </div>
         )
     }

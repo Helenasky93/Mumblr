@@ -30,8 +30,6 @@ class Post extends React.Component {
     };
 
     render() {
-        console.warn(this.state, this.props, this.props.post.likes)
-
         let post = this.props.post
         let media;
         if (post.post_type === "photo") {
@@ -53,6 +51,7 @@ class Post extends React.Component {
         <button onClick={this.toggleLike}>
             {this.state.liked ? 'Unlike' : 'Like'}
         </button>
+        <div>{post.likes}</div>
             </div>
         )
     }
