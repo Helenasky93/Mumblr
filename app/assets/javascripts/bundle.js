@@ -237,7 +237,7 @@ var deletePost = function deletePost(postId) {
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, RECEIVE_ALL_USERS, receiveCurrentUser, logoutCurrentUser, receiveSessionErrors, receiveAllUsers, signup, login, logout, allUsers */
+/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, RECEIVE_ALL_USERS, receiveCurrentUser, logoutCurrentUser, receiveSessionErrors, receiveAllUsers, signup, login, logout, updateProfilePicture, allUsers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -253,6 +253,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateProfilePicture", function() { return updateProfilePicture; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allUsers", function() { return allUsers; });
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
 
@@ -305,6 +306,15 @@ var logout = function logout() {
   return function (dispatch) {
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["logout"]().then(function () {
       return dispatch(logoutCurrentUser());
+    });
+  };
+};
+var updateProfilePicture = function updateProfilePicture(user) {
+  return function (dispatch) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["updateProfilePicture"](user).then(function (user) {
+      return dispatch(receiveCurrentUser(user));
+    }, function (err) {
+      return dispatch(receiveSessionErrors(err.responseJSON));
     });
   };
 };
@@ -405,14 +415,49 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(Dashboard);
 
   function Dashboard(props) {
+    var _this;
+
     _classCallCheck(this, Dashboard);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.updateProfilePicture = _this.updateProfilePicture.bind(_assertThisInitialized(_this));
+    var user = _this.props.currentUser;
+    _this.state = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      profile_picture: user.profile_picture,
+      profile_picture_url: user.profile_picture_url
+    };
+    return _this;
   }
 
   _createClass(Dashboard, [{
+    key: "updateProfilePicture",
+    value: function updateProfilePicture(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var reader = new FileReader();
+      var picture = e.currentTarget.files[0];
+
+      reader.onloadend = function () {
+        return _this2.setState({
+          profile_picture_url: reader.result,
+          profile_picture: picture
+        });
+      };
+
+      reader.readAsDataURL(picture);
+      this.setState({
+        profile_picture: e.currentTarget.files[0]
+      });
+      this.props.updateProfilePicture(this.state);
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      debugger;
       this.props.fetchAllPosts();
       this.props.fetchAllLikes();
       this.props.allUsers();
@@ -435,7 +480,10 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
         className: "greetingBox"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Hi, ", this.props.currentUser.username, "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
-      }, "Log Out")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_post_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Log Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "change profile picture", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        className: "updateProfilePictureInput"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_post_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "leftColumn"
       }, showPosts), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_users_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], {
         allUsers: this.props.users
@@ -472,6 +520,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var mstp = function mstp(state) {
   return {
     posts: Object.values(state.entities.posts).reverse(),
@@ -493,6 +542,9 @@ var mdtp = function mdtp(dispatch) {
     },
     allUsers: function allUsers() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["allUsers"])());
+    },
+    updateProfilePicture: function updateProfilePicture(user) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["updateProfilePicture"])(user));
     }
   };
 };
@@ -2103,7 +2155,7 @@ var ProtectedRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withR
 /*!*******************************************!*\
   !*** ./frontend/util/session_api_util.js ***!
   \*******************************************/
-/*! exports provided: login, signup, logout, allUsers */
+/*! exports provided: login, signup, logout, allUsers, updateProfilePicture */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2112,6 +2164,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allUsers", function() { return allUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateProfilePicture", function() { return updateProfilePicture; });
 var login = function login(user) {
   return $.ajax({
     method: 'POST',
@@ -2140,6 +2193,15 @@ var allUsers = function allUsers() {
   return $.ajax({
     method: 'GET',
     url: '/api/users'
+  });
+};
+var updateProfilePicture = function updateProfilePicture(user) {
+  return $.ajax({
+    method: "PATCH",
+    url: "api/users/".concat(post.id),
+    data: {
+      user: user
+    }
   });
 };
 

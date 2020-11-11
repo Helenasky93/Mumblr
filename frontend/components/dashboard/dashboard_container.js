@@ -4,6 +4,7 @@ import {fetchAllPosts} from '../../actions/post_actions'
 import {logout} from '../../actions/session_actions'
 import {fetchAllLikes} from '../../actions/like_actions'
 import {allUsers} from '../../actions/session_actions'
+import {updateProfilePicture} from '../../actions/session_actions'
 
 
 const mstp = state => ({
@@ -16,7 +17,8 @@ const mdtp = dispatch => ({
     fetchAllPosts: () => dispatch(fetchAllPosts()),
     logout: () => dispatch(logout()),
     fetchAllLikes: () => dispatch(fetchAllLikes()),
-    allUsers: () => dispatch(allUsers())
+    allUsers: () => dispatch(allUsers()),
+    updateProfilePicture: (user) => dispatch(updateProfilePicture(user))
 });
 
 export default connect(mstp,mdtp)(Dashboard);

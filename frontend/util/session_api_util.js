@@ -29,4 +29,12 @@ export const allUsers = () => {
     })
 }
 
+export const updateProfilePicture = user => {
+    return $.ajax({
+        method:"PATCH",
+        url: `api/users/${post.id}`,
+        data: {user}
+    })
+}
+
 

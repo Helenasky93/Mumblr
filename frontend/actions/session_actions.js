@@ -42,6 +42,12 @@ export const logout = () => dispatch => {
     .then(() => dispatch(logoutCurrentUser()))
 }
 
+export const updateProfilePicture = user => dispatch => {
+    return sessionApiUtil.updateProfilePicture(user)
+    .then(user => dispatch(receiveCurrentUser(user)),
+    err => (dispatch(receiveSessionErrors(err.responseJSON))))
+}
+
 export const allUsers = () => dispatch => {
     return sessionApiUtil.allUsers()
     .then(users => dispatch(receiveAllUsers(users)))
