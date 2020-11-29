@@ -30,11 +30,22 @@ export const allUsers = () => {
 }
 
 export const updateProfilePicture = user => {
+    
+    var data = new FormData()
+    data.append('user[email]', user.email)
+    data.append('user[id]', user.id)
+    data.append('user[username]', user.username)
+    data.append('user[profile_picture]', user.profile_picture)
+    data.append('user[profile_picture_url]', user.profile_picture_url)
+
     return $.ajax({
         method:"PATCH",
-        url: `api/users/${post.id}`,
-        data: {user}
+        url: `api/users/${user.id}`,
+        data,
+        processData: false,
+        contentType: false
     })
+   
 }
 
 

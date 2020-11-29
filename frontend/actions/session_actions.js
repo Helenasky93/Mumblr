@@ -43,9 +43,17 @@ export const logout = () => dispatch => {
 }
 
 export const updateProfilePicture = user => dispatch => {
+    // debugger
+    console.log(user)
     return sessionApiUtil.updateProfilePicture(user)
-    .then(user => dispatch(receiveCurrentUser(user)),
-    err => (dispatch(receiveSessionErrors(err.responseJSON))))
+    .then(user => {
+        console.log('SOUPPPPPP', user)
+        return dispatch(receiveCurrentUser(user))
+    },
+    err => {
+        console.error('ERROR SOUP',err)
+        return (dispatch(receiveSessionErrors(err.responseJSON)))
+    })
 }
 
 export const allUsers = () => dispatch => {

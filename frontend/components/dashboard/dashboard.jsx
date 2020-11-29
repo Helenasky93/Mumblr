@@ -7,6 +7,7 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.updateProfilePicture = this.updateProfilePicture.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         let user = this.props.currentUser
         this.state = {
             id: user.id,
@@ -18,20 +19,27 @@ class Dashboard extends React.Component {
         
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        const user = Object.assign({}, this.state);
+        this.props.updateProfilePicture(user);
+    }
+
     updateProfilePicture(e) {
         e.preventDefault();
         const reader = new FileReader();
         const picture = e.currentTarget.files[0];
-        reader.onloadend = () => 
-        this.setState({ profile_picture_url: reader.result, profile_picture: picture })
+        reader.onloadend = () => {
+            this.setState({ profile_picture_url: reader.result, profile_picture: picture });
+
+        } 
         reader.readAsDataURL(picture);
         this.setState({profile_picture: e.currentTarget.files[0]});
-        this.props.updateProfilePicture(this.state)
+        
         
     }
 
     componentDidMount() {
-        debugger
         this.props.fetchAllPosts();
         this.props.fetchAllLikes();
         this.props.allUsers();
@@ -55,11 +63,15 @@ class Dashboard extends React.Component {
                     <button onClick={this.props.logout}>Log Out</button>
                     <br/>
                     <label>change profile picture
-                    <input type="file" className="updateProfilePictureInput"/>
+                        <form className="changeProfilePictureForm" onSubmit={this.handleSubmit}>
+                            <input type="file" className="updateProfilePictureInput" onChange={this.updateProfilePicture}/>
+                            <button className="changeProfilePictureButton">update</button>
+
+                        </form>
 
                     </label>
                 </hgroup>
-
+                <img height="100" width="100" src={this.props.currentUser.profile_picture_url} alt="profile pic" />
                 <PostForm />
                 <div className='leftColumn'>
                     {showPosts}

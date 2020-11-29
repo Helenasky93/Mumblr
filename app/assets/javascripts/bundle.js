@@ -311,9 +311,13 @@ var logout = function logout() {
 };
 var updateProfilePicture = function updateProfilePicture(user) {
   return function (dispatch) {
+    // debugger
+    console.log(user);
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["updateProfilePicture"](user).then(function (user) {
+      console.log('SOUPPPPPP', user);
       return dispatch(receiveCurrentUser(user));
     }, function (err) {
+      console.error('ERROR SOUP', err);
       return dispatch(receiveSessionErrors(err.responseJSON));
     });
   };
@@ -421,6 +425,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.updateProfilePicture = _this.updateProfilePicture.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     var user = _this.props.currentUser;
     _this.state = {
       id: user.id,
@@ -433,6 +438,13 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Dashboard, [{
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var user = Object.assign({}, this.state);
+      this.props.updateProfilePicture(user);
+    }
+  }, {
     key: "updateProfilePicture",
     value: function updateProfilePicture(e) {
       var _this2 = this;
@@ -442,7 +454,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       var picture = e.currentTarget.files[0];
 
       reader.onloadend = function () {
-        return _this2.setState({
+        _this2.setState({
           profile_picture_url: reader.result,
           profile_picture: picture
         });
@@ -452,12 +464,10 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       this.setState({
         profile_picture: e.currentTarget.files[0]
       });
-      this.props.updateProfilePicture(this.state);
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       this.props.fetchAllPosts();
       this.props.fetchAllLikes();
       this.props.allUsers();
@@ -480,10 +490,21 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
         className: "greetingBox"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Hi, ", this.props.currentUser.username, "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
-      }, "Log Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "change profile picture", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Log Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "change profile picture", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "changeProfilePictureForm",
+        onSubmit: this.handleSubmit
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "file",
-        className: "updateProfilePictureInput"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_post_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "updateProfilePictureInput",
+        onChange: this.updateProfilePicture
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "changeProfilePictureButton"
+      }, "update")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        height: "100",
+        width: "100",
+        src: this.props.currentUser.profile_picture_url,
+        alt: "profile pic"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_post_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "leftColumn"
       }, showPosts), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_users_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], {
         allUsers: this.props.users
@@ -1644,7 +1665,6 @@ var allUsersReducer = function allUsersReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
-  console.log('HIIIIII ', action, state);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_USERS"]:
@@ -2071,7 +2091,6 @@ var createPost = function createPost(formData) {
   });
 };
 var updatePost = function updatePost(formData) {
-  debugger;
   return $.ajax({
     method: 'PATCH',
     url: "/api/posts/".concat(formData.getAll("post[id]")[0]),
@@ -2196,12 +2215,18 @@ var allUsers = function allUsers() {
   });
 };
 var updateProfilePicture = function updateProfilePicture(user) {
+  var data = new FormData();
+  data.append('user[email]', user.email);
+  data.append('user[id]', user.id);
+  data.append('user[username]', user.username);
+  data.append('user[profile_picture]', user.profile_picture);
+  data.append('user[profile_picture_url]', user.profile_picture_url);
   return $.ajax({
     method: "PATCH",
-    url: "api/users/".concat(post.id),
-    data: {
-      user: user
-    }
+    url: "api/users/".concat(user.id),
+    data: data,
+    processData: false,
+    contentType: false
   });
 };
 
