@@ -1648,11 +1648,31 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(UserShowPage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.allUsers();
+      this.props.fetchAllPosts();
+    }
+  }, {
     key: "render",
     value: function render() {
+      console.log(this.props.posts);
+      console.log(this.props);
+      var user;
+      var posts;
+
+      if (this.props.users.allUsers && this.props.posts.length) {
+        user = this.props.users.allUsers[parseInt(this.props.match.params.id)];
+        posts = Object.values(this.props.posts).filter(function (value) {
+          console.log(value, user);
+          return value.author_id === user.id;
+        });
+        console.log(user, posts);
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
-      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Home")), "WAP ", this.props.match.params.id);
+      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), "WAP ", this.props.match.params.id);
     }
   }]);
 
@@ -1681,7 +1701,14 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _user_show_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user_show_page */ "./frontend/components/user_show_page/user_show_page.jsx");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/post_actions */ "./frontend/actions/post_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
 
 
 
@@ -1690,14 +1717,24 @@ __webpack_require__.r(__webpack_exports__);
 var mstp = function mstp(state) {
   return {
     currentUser: state.entities.users[state.session.id],
-    users: state.entities.allUsers
+    posts: Object.values(state.entities.posts).reverse(),
+    users: state.entities.allUsers,
+    navLink: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
+      to: "/"
+    }, "Home")
   };
 };
 
 var mdtp = function mdtp(dispatch) {
   return {
     logout: function logout() {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["logout"])());
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["logout"])());
+    },
+    allUsers: function allUsers() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["allUsers"])());
+    },
+    fetchAllPosts: function fetchAllPosts() {
+      return dispatch(Object(_actions_post_actions__WEBPACK_IMPORTED_MODULE_2__["fetchAllPosts"])());
     }
   };
 };
