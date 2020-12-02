@@ -76,7 +76,9 @@ class Dashboard extends React.Component {
                 <div className='leftColumn'>
                     {showPosts}
                 </div>
-                <UsersSidebar allUsers={this.props.users} />
+                <div >
+                    <UsersSidebar allUsers={this.props.users} />
+                </div>
             </div>
         )
     }

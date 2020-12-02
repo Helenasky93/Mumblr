@@ -513,9 +513,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
         alt: "profile pic"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_post_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "leftColumn"
-      }, showPosts), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_users_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, showPosts), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_users_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], {
         allUsers: this.props.users
-      }));
+      })));
     }
   }]);
 
@@ -592,12 +592,38 @@ var mdtp = function mdtp(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 var UsersSidebar = function UsersSidebar(props) {
   // debugger
-  console.log(props);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+  // let users = props.
+  // let showUsers = 
+  var users;
+  var showUsers;
+
+  if (props.allUsers && props.allUsers.allUsers) {
+    users = Object.values(props.allUsers.allUsers);
+    console.log(users, "ALL USERS");
+    showUsers = users.map(function (user, idx) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/users/".concat(user.id),
+        className: "login"
+      }, user.username, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        height: "100",
+        width: "100",
+        id: idx,
+        src: user.profile_picture_url,
+        alt: "profile_pic"
+      }));
+    });
+  }
+
+  ;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "sidebar"
+  }, showUsers);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UsersSidebar);
@@ -768,13 +794,19 @@ var Post = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "edit",
     value: function edit() {
+      var _this2 = this;
+
       var post = this.props.post;
       console.log(this.state.currentUser, this.state.author);
 
       if (this.state.currentUser && this.state.author && this.state.currentUser.id === this.state.author.id) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_edit_post_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_edit_post_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
           post: post
-        });
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return _this2.props.deletePost(post.id);
+          }
+        }, "Delete Post"));
       }
 
       ;
@@ -782,8 +814,6 @@ var Post = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       var post = this.props.post;
       var media;
 
@@ -816,10 +846,6 @@ var Post = /*#__PURE__*/function (_React$Component) {
       }, post.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "body"
       }, post.body), media)), this.edit(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this2.props.deletePost(post.id);
-        }
-      }, "Delete Post"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.toggleLike
       }, this.state.liked ? 'Unlike' : 'Like'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, post.likes));
     }
