@@ -1,4 +1,5 @@
 import React from 'react';
+import Post from '../post/post_container';
 
 class UserShowPage extends React.Component {
 
@@ -16,20 +17,39 @@ class UserShowPage extends React.Component {
     }
 
     render() {
-        console.log(this.props.posts)
-        console.log(this.props)
+        // console.log(this.props.posts)
+        // console.log(this.props)
         let user;
         let posts;
+        let showPosts;
+
         if (this.props.users.allUsers && this.props.posts.length) {
 
         
             user = this.props.users.allUsers[parseInt(this.props.match.params.id)];
             posts = Object.values(this.props.posts).filter(value => {
-                console.log(value, user)
+                // console.log(value, user)
                 return value.author_id === user.id
-            })
-            console.log(user, posts)
+            });
+            showPosts = posts.map((post, idx) => {
+                return(
+                    <div key={idx}>
+                        <Post key={idx} post={post}/>
+                        <br/>
+                    </div>
+                )
+            });
+            // console.log(user, posts)
         }
+        // console.log(user, 'UUSSEERR')
+
+        function profilePicture  ()  {
+            if (user && user.profile_picture_url) {
+                return (
+                <img height='150' width='150' src={user.profile_picture_url} alt="profile pic" />
+            )}
+        };
+            
 
     
         
@@ -40,7 +60,14 @@ class UserShowPage extends React.Component {
                     <br/>
                     {this.props.navLink}
                 </hgroup>
-        WAP { this.props.match.params.id }
+                
+                <div>
+                    {profilePicture()}
+                </div>
+                <div>
+                    {showPosts}
+                </div>
+                
             </div >
         )
     }

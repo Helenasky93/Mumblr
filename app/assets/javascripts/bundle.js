@@ -732,9 +732,11 @@ var Post = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       author: _this.props.author,
-      liked: _this.props.liked
+      liked: _this.props.liked,
+      currentUser: _this.props.currentUser
     };
     _this.toggleLike = _this.toggleLike.bind(_assertThisInitialized(_this));
+    _this.edit = _this.edit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -748,6 +750,9 @@ var Post = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {}
+  }, {
     key: "toggleLike",
     value: function toggleLike() {
       var post = this.props.post; // debugger
@@ -756,6 +761,20 @@ var Post = /*#__PURE__*/function (_React$Component) {
         this.props.unlikePost(post.id);
       } else {
         this.props.likePost(post.id);
+      }
+
+      ;
+    }
+  }, {
+    key: "edit",
+    value: function edit() {
+      var post = this.props.post;
+      console.log(this.state.currentUser, this.state.author);
+
+      if (this.state.currentUser && this.state.author && this.state.currentUser.id === this.state.author.id) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_edit_post_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          post: post
+        });
       }
 
       ;
@@ -796,9 +815,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
         className: "title"
       }, post.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "body"
-      }, post.body), media)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_edit_post_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        post: post
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, post.body), media)), this.edit(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
           return _this2.props.deletePost(post.id);
         }
@@ -1612,6 +1629,7 @@ var signupSessionForm = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _post_post_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../post/post_container */ "./frontend/components/post/post_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1636,6 +1654,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var UserShowPage = /*#__PURE__*/function (_React$Component) {
   _inherits(UserShowPage, _React$Component);
 
@@ -1656,23 +1675,44 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.props.posts);
-      console.log(this.props);
+      // console.log(this.props.posts)
+      // console.log(this.props)
       var user;
       var posts;
+      var showPosts;
 
       if (this.props.users.allUsers && this.props.posts.length) {
         user = this.props.users.allUsers[parseInt(this.props.match.params.id)];
         posts = Object.values(this.props.posts).filter(function (value) {
-          console.log(value, user);
+          // console.log(value, user)
           return value.author_id === user.id;
         });
-        console.log(user, posts);
+        showPosts = posts.map(function (post, idx) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: idx
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_post_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            key: idx,
+            post: post
+          }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+        }); // console.log(user, posts)
+      } // console.log(user, 'UUSSEERR')
+
+
+      function profilePicture() {
+        if (user && user.profile_picture_url) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            height: "150",
+            width: "150",
+            src: user.profile_picture_url,
+            alt: "profile pic"
+          });
+        }
       }
 
+      ;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
-      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), "WAP ", this.props.match.params.id);
+      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, profilePicture()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, showPosts));
     }
   }]);
 
