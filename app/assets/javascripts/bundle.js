@@ -86,6 +86,71 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/follow_actions.js":
+/*!********************************************!*\
+  !*** ./frontend/actions/follow_actions.js ***!
+  \********************************************/
+/*! exports provided: RECEIVE_ALL_FOLLOWS, RECEIVE_FOLLOW, REMOVE_FOLLOW, receiveAllFollows, receiveFollow, removeFollow, fetchAllFollows, followUser, unfollowUser */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ALL_FOLLOWS", function() { return RECEIVE_ALL_FOLLOWS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_FOLLOW", function() { return RECEIVE_FOLLOW; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_FOLLOW", function() { return REMOVE_FOLLOW; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAllFollows", function() { return receiveAllFollows; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveFollow", function() { return receiveFollow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFollow", function() { return removeFollow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllFollows", function() { return fetchAllFollows; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "followUser", function() { return followUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unfollowUser", function() { return unfollowUser; });
+/* harmony import */ var _util_follow_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/follow_api_util */ "./frontend/util/follow_api_util.js");
+var RECEIVE_ALL_FOLLOWS = 'RECEIVE_ALL_FOLLOWS';
+var RECEIVE_FOLLOW = 'RECEIVE_FOLLOW';
+var REMOVE_FOLLOW = 'REMOVE_FOLLOW';
+
+var receiveAllFollows = function receiveAllFollows(follows) {
+  return {
+    type: RECEIVE_ALL_FOLLOWS,
+    follows: follows
+  };
+};
+var receiveFollow = function receiveFollow(follow) {
+  return {
+    type: RECEIVE_FOLLOW,
+    follow: follow
+  };
+};
+var removeFollow = function removeFollow(follow) {
+  return {
+    type: REMOVE_FOLLOW,
+    follow: follow
+  };
+};
+var fetchAllFollows = function fetchAllFollows() {
+  return function (dispatch) {
+    _util_follow_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchAllFollows"]().then(function (follows) {
+      return dispatch(receiveAllFollows(follows));
+    });
+  };
+};
+var followUser = function followUser(userId) {
+  return function (dispatch) {
+    _util_follow_api_util__WEBPACK_IMPORTED_MODULE_0__["followUser"](userId).then(function (follow) {
+      return dispatch(receiveFollow(follow));
+    });
+  };
+};
+var unfollowUser = function unfollowUser(userId) {
+  return function (dispatch) {
+    _util_follow_api_util__WEBPACK_IMPORTED_MODULE_0__["unfollowUser"](userId).then(function (follow) {
+      return dispatch(removeFollow(follow));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/like_actions.js":
 /*!******************************************!*\
   !*** ./frontend/actions/like_actions.js ***!
@@ -483,6 +548,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var posts = this.props.posts;
+      console.log(posts);
       var showPosts = posts.map(function (post, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: idx
@@ -604,12 +670,13 @@ var UsersSidebar = function UsersSidebar(props) {
   var showUsers;
 
   if (props.allUsers && props.allUsers.allUsers) {
-    users = Object.values(props.allUsers.allUsers);
-    console.log(users, "ALL USERS");
+    users = Object.values(props.allUsers.allUsers); // console.log(users, "ALL USERS")
+
     showUsers = users.map(function (user, idx) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/users/".concat(user.id),
-        className: "login"
+        key: idx,
+        className: "sidebarLink"
       }, user.username, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         height: "100",
         width: "100",
@@ -1687,9 +1754,20 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(UserShowPage);
 
   function UserShowPage(props) {
+    var _this;
+
     _classCallCheck(this, UserShowPage);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      user: null,
+      showPosts: null,
+      isFollowing: null
+    };
+    console.log(_this.props.users, "ALL USERS");
+    _this.handleFollow = _this.handleFollow.bind(_assertThisInitialized(_this));
+    _this.profilePicture = _this.profilePicture.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(UserShowPage, [{
@@ -1697,60 +1775,102 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       this.props.allUsers();
       this.props.fetchAllPosts();
+      this.props.fetchAllFollows();
+    }
+  }, {
+    key: "handleFollow",
+    value: function handleFollow() {
+      var isFollowing;
+      var user = this.state.user;
+      var followedUserIds = Object.values(this.props.currentUser.followed_users).map(function (value) {
+        return value.user_id;
+      });
+      console.log(user);
+      var currentUser = this.props.currentUser;
+
+      if (currentUser.followed_users.length && followedUserIds.includes(user.id)) {
+        isFollowing = true;
+      } else {
+        isFollowing = false;
+      }
+
+      ;
+
+      if (isFollowing) {
+        this.props.unfollowUser(currentUser.id);
+      } else {
+        this.props.followUser(currentUser.id);
+      }
+
+      ;
+      console.log(isFollowing, "FOLLOWING");
+    }
+  }, {
+    key: "profilePicture",
+    value: function profilePicture() {
+      console.log(this.state.user, "PROFILE PICTURE USER");
+
+      if (this.state.user) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          height: "150",
+          width: "150",
+          src: this.state.user.profile_picture_url,
+          alt: "profile pic"
+        });
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      // console.log(this.props.posts)
-      // console.log(this.props)
-      var user;
-      var posts;
-      var showPosts;
+      console.log(this.state, "STATE");
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.props.logout
+      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.profilePicture(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleFollow
+      }, this.state.isFollowing ? "Unfollow" : "Follow")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.showPosts));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (props.users.allUsers && props.posts.length && !state.user) {
+        var user = props.users.allUsers[parseInt(props.match.params.id)];
+        var isFollowing;
+        var followedUserIds = Object.values(props.currentUser.followed_users).map(function (value) {
+          return value.user_id;
+        });
+        console.log(followedUserIds, 'FOLLOWED USERS');
+        console.log(props.currentUser.followed_users.length, followedUserIds.includes(user.id), user.id);
 
-      if (this.props.users.allUsers && this.props.posts.length) {
-        user = this.props.users.allUsers[parseInt(this.props.match.params.id)];
-        posts = Object.values(this.props.posts).filter(function (value) {
-          // console.log(value, user)
+        if (props.currentUser.followed_users.length && followedUserIds.includes(user.id)) {
+          isFollowing = true;
+        } else {
+          isFollowing = false;
+        }
+
+        ;
+        console.log(isFollowing, 'FOLLOWING');
+        var posts = Object.values(props.posts).filter(function (value) {
           return value.author_id === user.id;
         });
-        showPosts = posts.map(function (post, idx) {
+        var showPosts = posts.map(function (post, idx) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: idx
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_post_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: idx,
             post: post
           }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
-        }); // console.log(user, posts)
-      } // console.log(user, 'UUSSEERR')
-
-
-      function profilePicture() {
-        if (user && user.profile_picture_url) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            height: "150",
-            width: "150",
-            src: user.profile_picture_url,
-            alt: "profile pic"
-          });
-        }
+        });
+        return {
+          user: user,
+          showPosts: showPosts,
+          isFollowing: isFollowing
+        };
       }
-
-      ;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.props.logout
-      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, profilePicture()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, showPosts));
     }
   }]);
 
   return UserShowPage;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // export default function(props) {
-//     return(
-//         <div>
-//             WAP {props.match.params.id}
-//         </div>
-//     )
-// };
-
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (UserShowPage);
 
@@ -1769,9 +1889,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_show_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user_show_page */ "./frontend/components/user_show_page/user_show_page.jsx");
 /* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/post_actions */ "./frontend/actions/post_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _actions_follow_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/follow_actions */ "./frontend/actions/follow_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
 
 
 
@@ -1785,7 +1909,7 @@ var mstp = function mstp(state) {
     currentUser: state.entities.users[state.session.id],
     posts: Object.values(state.entities.posts).reverse(),
     users: state.entities.allUsers,
-    navLink: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
+    navLink: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
       to: "/"
     }, "Home")
   };
@@ -1801,6 +1925,15 @@ var mdtp = function mdtp(dispatch) {
     },
     fetchAllPosts: function fetchAllPosts() {
       return dispatch(Object(_actions_post_actions__WEBPACK_IMPORTED_MODULE_2__["fetchAllPosts"])());
+    },
+    followUser: function followUser(user_id) {
+      return dispatch(Object(_actions_follow_actions__WEBPACK_IMPORTED_MODULE_4__["followUser"])(user_id));
+    },
+    unfollowUser: function unfollowUser(user_id) {
+      return dispatch(Object(_actions_follow_actions__WEBPACK_IMPORTED_MODULE_4__["unfollowUser"])(user_id));
+    },
+    fetchAllFollows: function fetchAllFollows() {
+      return dispatch(Object(_actions_follow_actions__WEBPACK_IMPORTED_MODULE_4__["fetchAllFollows"])());
     }
   };
 };
@@ -2221,6 +2354,52 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/follow_api_util.js":
+/*!******************************************!*\
+  !*** ./frontend/util/follow_api_util.js ***!
+  \******************************************/
+/*! exports provided: fetchAllFollows, receiveFollow, followUser, unfollowUser */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllFollows", function() { return fetchAllFollows; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveFollow", function() { return receiveFollow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "followUser", function() { return followUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unfollowUser", function() { return unfollowUser; });
+var fetchAllFollows = function fetchAllFollows() {
+  return $.ajax({
+    url: 'api/follows',
+    method: 'GET'
+  });
+};
+var receiveFollow = function receiveFollow(id) {
+  return $.ajax({
+    url: "api/follows/".concat(id),
+    method: 'GET'
+  });
+};
+var followUser = function followUser(id) {
+  return $.ajax({
+    url: 'api/follows',
+    method: 'POST',
+    data: {
+      id: id
+    }
+  });
+};
+var unfollowUser = function unfollowUser(id) {
+  return $.ajax({
+    url: "api/follows/".concat(id),
+    method: 'DELETE',
+    data: {
+      id: id
+    }
+  });
+};
 
 /***/ }),
 

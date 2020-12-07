@@ -47,6 +47,7 @@ class Dashboard extends React.Component {
 
     render() {
         let posts = this.props.posts;
+        console.log(posts)
         let showPosts = posts.map((post,idx) => {
             return (
                 <div key={idx}>

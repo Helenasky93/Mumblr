@@ -8,13 +8,14 @@ class Api::FollowsController < ApplicationController
     end
 
     def create
+        # debugger
         @follow = Follow.new
         @follow.follower_id = current_user.id
         @follow.user_id = params[:id]
         if @follow.save
             render :show
         else
-            render :json @follow.errors.full_messages, status: 401
+            render json: @follow.errors.full_messages, status: 401
         end
     end
 

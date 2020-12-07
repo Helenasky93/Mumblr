@@ -28,6 +28,14 @@ class User < ApplicationRecord
     foreign_key: :user_id,
     class_name: :Like
 
+    has_many :followed_users,
+    foreign_key: :user_id,
+    class_name: :Follow
+
+    has_many :followers,
+    foreign_key: :follower_id,
+    class_name: :Follow
+
     has_one_attached :profile_picture
 
     def self.find_by_credentials(username, password)

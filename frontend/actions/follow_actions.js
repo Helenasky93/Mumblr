@@ -24,11 +24,11 @@ export const fetchAllFollows = () => dispatch => {
     .then(follows => dispatch(receiveAllFollows(follows)))
 };
 
-export const followUser = () => dispatch => {
+export const followUser = (userId) => dispatch => {
     followApiUtil.followUser(userId)
     .then(follow => dispatch(receiveFollow(follow)))
 };
-export const unfollowUser = () => dispatch => {
+export const unfollowUser = (userId) => dispatch => {
     followApiUtil.unfollowUser(userId)
     .then(follow => dispatch(removeFollow(follow)))
 };
