@@ -29,7 +29,8 @@ class UserShowPage extends React.Component {
                 return value.user_id;
             });
             
-            console.log(followedUserIds, 'FOLLOWED USERS')
+            console.warn(props.currentUser
+                , 'FOLLOWED USERS')
             
            
             console.log(props.currentUser.followed_users.length, followedUserIds.includes(user.id), user.id)
@@ -53,8 +54,9 @@ class UserShowPage extends React.Component {
                 )
             });
 
-            return({ user: user, showPosts: showPosts, isFollowing: isFollowing });
+            return { user: user, showPosts: showPosts, isFollowing: isFollowing };
         }
+        return null;
     }
 
     componentDidMount() {
@@ -65,24 +67,17 @@ class UserShowPage extends React.Component {
     }
 
     handleFollow() {
-        let isFollowing;
+        let isFollowing = this.state.isFollowing;
         let user = this.state.user;
-        let followedUserIds = Object.values(this.props.currentUser.followed_users).map(value => {
-            return value.user_id;
-        });
-        console.log(user);
-        let currentUser = this.props.currentUser;
-        if (currentUser.followed_users.length && followedUserIds.includes(user.id)) {
-            isFollowing = true
-        } else {
-            isFollowing = false
-        };
 
         if (isFollowing) {
-            this.props.unfollowUser(currentUser.id);
+            this.props.unfollowUser(user.id);
+            this.setState({ isFollowing: false });
         } else {
-            this.props.followUser(currentUser.id);
+            this.props.followUser(user.id);
+            this.setState({ isFollowing: true });
         };
+        // this.setState({isFollowing: isFollowing})
         console.log(isFollowing, "FOLLOWING")
     }
     profilePicture() {

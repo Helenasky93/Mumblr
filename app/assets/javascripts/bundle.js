@@ -1780,29 +1780,23 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleFollow",
     value: function handleFollow() {
-      var isFollowing;
+      var isFollowing = this.state.isFollowing;
       var user = this.state.user;
-      var followedUserIds = Object.values(this.props.currentUser.followed_users).map(function (value) {
-        return value.user_id;
-      });
-      console.log(user);
-      var currentUser = this.props.currentUser;
-
-      if (currentUser.followed_users.length && followedUserIds.includes(user.id)) {
-        isFollowing = true;
-      } else {
-        isFollowing = false;
-      }
-
-      ;
 
       if (isFollowing) {
-        this.props.unfollowUser(currentUser.id);
+        this.props.unfollowUser(user.id);
+        this.setState({
+          isFollowing: false
+        });
       } else {
-        this.props.followUser(currentUser.id);
+        this.props.followUser(user.id);
+        this.setState({
+          isFollowing: true
+        });
       }
 
-      ;
+      ; // this.setState({isFollowing: isFollowing})
+
       console.log(isFollowing, "FOLLOWING");
     }
   }, {
@@ -1838,7 +1832,7 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
         var followedUserIds = Object.values(props.currentUser.followed_users).map(function (value) {
           return value.user_id;
         });
-        console.log(followedUserIds, 'FOLLOWED USERS');
+        console.warn(props.currentUser, 'FOLLOWED USERS');
         console.log(props.currentUser.followed_users.length, followedUserIds.includes(user.id), user.id);
 
         if (props.currentUser.followed_users.length && followedUserIds.includes(user.id)) {
@@ -1866,6 +1860,8 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
           isFollowing: isFollowing
         };
       }
+
+      return null;
     }
   }]);
 

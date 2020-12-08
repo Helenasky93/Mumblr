@@ -29,11 +29,11 @@ class User < ApplicationRecord
     class_name: :Like
 
     has_many :followed_users,
-    foreign_key: :user_id,
+    foreign_key: :follower_id,
     class_name: :Follow
 
     has_many :followers,
-    foreign_key: :follower_id,
+    foreign_key: :user_id,
     class_name: :Follow
 
     has_one_attached :profile_picture
