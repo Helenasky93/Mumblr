@@ -29,6 +29,13 @@ export const allUsers = () => {
     })
 }
 
+export const fetchCurrentUser = (id) => {
+    return $.ajax({
+        method: 'GET',
+        url: `/api/users/${id}`
+    })
+}
+
 export const updateProfilePicture = user => {
     
     var data = new FormData()

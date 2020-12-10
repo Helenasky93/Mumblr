@@ -302,7 +302,7 @@ var deletePost = function deletePost(postId) {
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, RECEIVE_ALL_USERS, receiveCurrentUser, logoutCurrentUser, receiveSessionErrors, receiveAllUsers, signup, login, logout, updateProfilePicture, allUsers */
+/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, RECEIVE_ALL_USERS, FETCH_CURRENT_USER, receiveCurrentUser, logoutCurrentUser, receiveSessionErrors, receiveAllUsers, signup, login, logout, updateProfilePicture, allUsers, getCurrentUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -311,6 +311,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGOUT_CURRENT_USER", function() { return LOGOUT_CURRENT_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SESSION_ERRORS", function() { return RECEIVE_SESSION_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ALL_USERS", function() { return RECEIVE_ALL_USERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_CURRENT_USER", function() { return FETCH_CURRENT_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveCurrentUser", function() { return receiveCurrentUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutCurrentUser", function() { return logoutCurrentUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveSessionErrors", function() { return receiveSessionErrors; });
@@ -320,12 +321,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateProfilePicture", function() { return updateProfilePicture; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allUsers", function() { return allUsers; });
-/* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCurrentUser", function() { return getCurrentUser; });
+/* harmony import */ var _util_follow_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/follow_api_util */ "./frontend/util/follow_api_util.js");
+/* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
+
 
 var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 var LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
 var RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
 var RECEIVE_ALL_USERS = 'RECEIVE_ALL_USERS';
+var FETCH_CURRENT_USER = 'FETCH_CURRENT_USER';
 var receiveCurrentUser = function receiveCurrentUser(currentUser) {
   return {
     type: RECEIVE_CURRENT_USER,
@@ -348,10 +353,14 @@ var receiveAllUsers = function receiveAllUsers(allUsers) {
     type: RECEIVE_ALL_USERS,
     allUsers: allUsers
   };
-};
+}; // export const fetchCurrentUser = id => ({
+//     type: FETCH_CURRENT_USER,
+//     id
+// })
+
 var signup = function signup(user) {
   return function (dispatch) {
-    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["signup"](user).then(function (user) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_1__["signup"](user).then(function (user) {
       return dispatch(receiveCurrentUser(user));
     }, function (err) {
       return dispatch(receiveSessionErrors(err.responseJSON));
@@ -360,7 +369,7 @@ var signup = function signup(user) {
 };
 var login = function login(user) {
   return function (dispatch) {
-    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["login"](user).then(function (user) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_1__["login"](user).then(function (user) {
       return dispatch(receiveCurrentUser(user));
     }, function (err) {
       return dispatch(receiveSessionErrors(err.responseJSON));
@@ -369,7 +378,7 @@ var login = function login(user) {
 };
 var logout = function logout() {
   return function (dispatch) {
-    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["logout"]().then(function () {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_1__["logout"]().then(function () {
       return dispatch(logoutCurrentUser());
     });
   };
@@ -377,8 +386,8 @@ var logout = function logout() {
 var updateProfilePicture = function updateProfilePicture(user) {
   return function (dispatch) {
     // debugger
-    console.log(user);
-    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["updateProfilePicture"](user).then(function (user) {
+    // console.log(user)
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_1__["updateProfilePicture"](user).then(function (user) {
       console.log('SOUPPPPPP', user);
       return dispatch(receiveCurrentUser(user));
     }, function (err) {
@@ -389,8 +398,15 @@ var updateProfilePicture = function updateProfilePicture(user) {
 };
 var allUsers = function allUsers() {
   return function (dispatch) {
-    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["allUsers"]().then(function (users) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_1__["allUsers"]().then(function (users) {
       return dispatch(receiveAllUsers(users));
+    });
+  };
+};
+var getCurrentUser = function getCurrentUser(id) {
+  return function (dispatch) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchCurrentUser"](id).then(function (user) {
+      return dispatch(receiveCurrentUser(user));
     });
   };
 };
@@ -498,13 +514,17 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.updateProfilePicture = _this.updateProfilePicture.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    var user = _this.props.currentUser;
+    var user = _this.props.currentUser; // let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
+    //     return follow.user_id
+    // });
+
     _this.state = {
       id: user.id,
       username: user.username,
       email: user.email,
       profile_picture: user.profile_picture,
-      profile_picture_url: user.profile_picture_url
+      profile_picture_url: user.profile_picture_url // followedUserIds: followedUserIds
+
     };
     return _this;
   }
@@ -543,19 +563,50 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       this.props.fetchAllPosts();
       this.props.fetchAllLikes();
       this.props.allUsers();
-    }
+      this.props.fetchAllFollows();
+      this.props.getCurrentUser(this.props.currentUser.id);
+    } // componentDidUpdate() {
+    //     this.props.fetchAllFollows();
+    // }
+    // static getDerivedStateFromProps(props, state) {
+    //     let nextFollowedUserIds = Object.values(props.currentUser.followed_users).map((follow) => {
+    //         return follow.user_id
+    //     });
+    //     return {followedUserIds: nextFollowedUserIds}
+    // }
+    // shouldComponentUpdate(nextProps) {
+    //     let nextFollowedUserIds = Object.values(nextProps.currentUser.followed_users).map((follow) => {
+    //         return follow.user_id
+    //     });
+    //     return this.state.followedUserIds === nextFollowedUserIds
+    // }
+    // componentDidUpdate() {
+    //     this.setState({
+    //         followedUserIds: nextFollowedUserIds
+    //     });
+    // }
+
   }, {
     key: "render",
     value: function render() {
+      var followedUserIds = Object.values(this.props.currentUser.followed_users).map(function (follow) {
+        return follow.user_id;
+      }); // debugger
+      // filter posts by author_id === current_user.id or author_id === current_user.followed_users.user_id
+
       var posts = this.props.posts;
-      console.log(posts);
+      var currentUser = this.props.currentUser; // let followedUserIds = this.state.followedUserIds;
+
+      console.log(followedUserIds, "FOLLOWED USERS IDS");
       var showPosts = posts.map(function (post, idx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: idx
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_post_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          key: idx,
-          post: post
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+        if (post.author_id === currentUser.id || followedUserIds.includes(post.author_id)) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: idx
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_post_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            key: idx,
+            post: post
+          }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+        }
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
@@ -575,7 +626,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       }, "update")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         height: "100",
         width: "100",
-        src: this.props.currentUser.profile_picture_url,
+        src: this.props.currentUser.profile_picture_url || window.default_avatar,
         alt: "profile pic"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_post_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "leftColumn"
@@ -607,6 +658,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/post_actions */ "./frontend/actions/post_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_like_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/like_actions */ "./frontend/actions/like_actions.js");
+/* harmony import */ var _actions_follow_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/follow_actions */ "./frontend/actions/follow_actions.js");
+
+
 
 
 
@@ -639,6 +693,12 @@ var mdtp = function mdtp(dispatch) {
     },
     updateProfilePicture: function updateProfilePicture(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["updateProfilePicture"])(user));
+    },
+    fetchAllFollows: function fetchAllFollows() {
+      return dispatch(Object(_actions_follow_actions__WEBPACK_IMPORTED_MODULE_5__["fetchAllFollows"])());
+    },
+    getCurrentUser: function getCurrentUser(id) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["getCurrentUser"])(id));
     }
   };
 };
@@ -681,7 +741,7 @@ var UsersSidebar = function UsersSidebar(props) {
         height: "100",
         width: "100",
         id: idx,
-        src: user.profile_picture_url,
+        src: user.profile_picture_url || window.default_avatar,
         alt: "profile_pic"
       }));
     });
@@ -1746,7 +1806,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-
+ // import avatar from '../../app/assets/images/default_avatar.png';
 
 var UserShowPage = /*#__PURE__*/function (_React$Component) {
   _inherits(UserShowPage, _React$Component);
@@ -1775,7 +1835,7 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       this.props.allUsers();
       this.props.fetchAllPosts();
-      this.props.fetchAllFollows();
+      this.props.fetchAllFollows(); // this.setState({});
     }
   }, {
     key: "handleFollow",
@@ -1795,7 +1855,8 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
         });
       }
 
-      ; // this.setState({isFollowing: isFollowing})
+      ;
+      this.props.fetchAllFollows(); // this.setState({isFollowing: isFollowing})
 
       console.log(isFollowing, "FOLLOWING");
     }
@@ -1808,8 +1869,8 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           height: "150",
           width: "150",
-          src: this.state.user.profile_picture_url,
-          alt: "profile pic"
+          src: this.state.user.profile_picture_url || window.default_avatar,
+          alt: "profile_pic"
         });
       }
     }
@@ -2250,6 +2311,12 @@ var sessionReducer = function sessionReducer() {
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
       return _nullUser;
+    // case FETCH_CURRENT_USER:
+    //     newState = {
+    //         id: action.id,
+    //         currentUser: action.u
+    //     };
+    //     return newState;
 
     default:
       return state;
@@ -2564,7 +2631,7 @@ var ProtectedRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withR
 /*!*******************************************!*\
   !*** ./frontend/util/session_api_util.js ***!
   \*******************************************/
-/*! exports provided: login, signup, logout, allUsers, updateProfilePicture */
+/*! exports provided: login, signup, logout, allUsers, fetchCurrentUser, updateProfilePicture */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2573,6 +2640,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allUsers", function() { return allUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchCurrentUser", function() { return fetchCurrentUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateProfilePicture", function() { return updateProfilePicture; });
 var login = function login(user) {
   return $.ajax({
@@ -2602,6 +2670,12 @@ var allUsers = function allUsers() {
   return $.ajax({
     method: 'GET',
     url: '/api/users'
+  });
+};
+var fetchCurrentUser = function fetchCurrentUser(id) {
+  return $.ajax({
+    method: 'GET',
+    url: "/api/users/".concat(id)
   });
 };
 var updateProfilePicture = function updateProfilePicture(user) {

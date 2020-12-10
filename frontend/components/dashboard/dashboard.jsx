@@ -9,12 +9,16 @@ class Dashboard extends React.Component {
         this.updateProfilePicture = this.updateProfilePicture.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         let user = this.props.currentUser
+        // let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
+        //     return follow.user_id
+        // });
         this.state = {
             id: user.id,
             username: user.username,
             email: user.email,
             profile_picture: user.profile_picture,
-            profile_picture_url: user.profile_picture_url
+            profile_picture_url: user.profile_picture_url,
+            // followedUserIds: followedUserIds
         }
         
     }
@@ -43,19 +47,60 @@ class Dashboard extends React.Component {
         this.props.fetchAllPosts();
         this.props.fetchAllLikes();
         this.props.allUsers();
+        this.props.fetchAllFollows();
+        this.props.getCurrentUser(this.props.currentUser.id);
     }
 
-    render() {
-        let posts = this.props.posts;
-        console.log(posts)
-        let showPosts = posts.map((post,idx) => {
-            return (
-                <div key={idx}>
-                    <Post key={idx} post={post}/>
-                    <br/>
+    // componentDidUpdate() {
+    //     this.props.fetchAllFollows();
+    // }
 
-                </div>
-            )
+
+    // static getDerivedStateFromProps(props, state) {
+    //     let nextFollowedUserIds = Object.values(props.currentUser.followed_users).map((follow) => {
+    //         return follow.user_id
+    //     });
+    //     return {followedUserIds: nextFollowedUserIds}
+
+    // }
+
+    // shouldComponentUpdate(nextProps) {
+    //     let nextFollowedUserIds = Object.values(nextProps.currentUser.followed_users).map((follow) => {
+    //         return follow.user_id
+    //     });
+    //     return this.state.followedUserIds === nextFollowedUserIds
+    // }
+
+    // componentDidUpdate() {
+        
+    //     this.setState({
+    //         followedUserIds: nextFollowedUserIds
+    //     });
+       
+    // }
+
+    render() {
+        let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
+            return follow.user_id
+        });
+        // debugger
+        // filter posts by author_id === current_user.id or author_id === current_user.followed_users.user_id
+        let posts = this.props.posts;
+        let currentUser = this.props.currentUser;
+        // let followedUserIds = this.state.followedUserIds;
+
+        console.log(followedUserIds, "FOLLOWED USERS IDS")
+        let showPosts = posts.map((post,idx) => {
+            if (post.author_id === currentUser.id || followedUserIds.includes(post.author_id) ) {
+
+                return (
+                    <div key={idx}>
+                        <Post key={idx} post={post}/>
+                        <br/>
+    
+                    </div>
+                )
+            }
         })
         return (
             <div className='dashboard'>
@@ -72,7 +117,7 @@ class Dashboard extends React.Component {
 
                     </label>
                 </hgroup>
-                <img height="100" width="100" src={this.props.currentUser.profile_picture_url} alt="profile pic" />
+                <img height="100" width="100" src={this.props.currentUser.profile_picture_url || window.default_avatar} alt="profile pic" />
                 <PostForm />
                 <div className='leftColumn'>
                     {showPosts}

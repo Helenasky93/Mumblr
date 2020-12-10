@@ -17,7 +17,7 @@ const UsersSidebar = props => {
             return(
                 <Link to={`/users/${user.id}`} key={idx} className='sidebarLink'>{user.username}
                 
-                <img height="100" width='100' id={idx} src={user.profile_picture_url} alt="profile_pic"/>
+                <img height="100" width='100' id={idx} src={user.profile_picture_url || window.default_avatar} alt="profile_pic"/>
                 </Link>
             );
         });

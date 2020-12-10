@@ -1,5 +1,7 @@
 import React from 'react';
 import Post from '../post/post_container';
+// import avatar from '../../app/assets/images/default_avatar.png';
+
 
 class UserShowPage extends React.Component {
 
@@ -63,6 +65,7 @@ class UserShowPage extends React.Component {
         this.props.allUsers();
         this.props.fetchAllPosts();
         this.props.fetchAllFollows();
+        // this.setState({});
         
     }
 
@@ -77,14 +80,16 @@ class UserShowPage extends React.Component {
             this.props.followUser(user.id);
             this.setState({ isFollowing: true });
         };
+        this.props.fetchAllFollows();
         // this.setState({isFollowing: isFollowing})
         console.log(isFollowing, "FOLLOWING")
+
     }
     profilePicture() {
         console.log(this.state.user, "PROFILE PICTURE USER")
     if (this.state.user) {
         return (
-            <img height='150' width='150' src={this.state.user.profile_picture_url} alt="profile pic" />
+            <img height='150' width='150' src={this.state.user.profile_picture_url || window.default_avatar } alt="profile_pic" />
         )
     }
 };

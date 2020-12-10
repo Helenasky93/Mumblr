@@ -1,4 +1,4 @@
-import {RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER} from '../actions/session_actions'
+import {RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, FETCH_CURRENT_USER} from '../actions/session_actions'
 
 const _nullUser = Object.freeze({id: null});
 const sessionReducer = (state = _nullUser, action) => {
@@ -14,6 +14,12 @@ const sessionReducer = (state = _nullUser, action) => {
             return newState;
         case LOGOUT_CURRENT_USER:
             return _nullUser;
+        // case FETCH_CURRENT_USER:
+        //     newState = {
+        //         id: action.id,
+        //         currentUser: action.u
+        //     };
+        //     return newState;
     
         default:
             return state;

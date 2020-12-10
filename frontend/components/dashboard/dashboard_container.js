@@ -5,6 +5,8 @@ import {logout} from '../../actions/session_actions'
 import {fetchAllLikes} from '../../actions/like_actions'
 import {allUsers} from '../../actions/session_actions'
 import {updateProfilePicture} from '../../actions/session_actions'
+import {fetchAllFollows} from '../../actions/follow_actions'
+import {getCurrentUser} from '../../actions/session_actions'
 
 
 const mstp = state => ({
@@ -18,7 +20,9 @@ const mdtp = dispatch => ({
     logout: () => dispatch(logout()),
     fetchAllLikes: () => dispatch(fetchAllLikes()),
     allUsers: () => dispatch(allUsers()),
-    updateProfilePicture: (user) => dispatch(updateProfilePicture(user))
+    updateProfilePicture: (user) => dispatch(updateProfilePicture(user)),
+    fetchAllFollows: () => dispatch(fetchAllFollows()),
+    getCurrentUser: (id) => dispatch(getCurrentUser(id))
 });
 
 export default connect(mstp,mdtp)(Dashboard);
