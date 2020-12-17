@@ -1,4 +1,4 @@
-.dashboard {
+.dashboard, .user-show-page {
 	display: grid;
 	grid-template-columns: 1fr 625px  1fr;
 	grid-template-rows: 100px 120px 1fr;
@@ -30,11 +30,98 @@
 
 .greetingBox {
 	margin-left: 50px;
+	display: flex;
+	align-items: center;
 }
+
 .sidebar {
 	border: dotted;
     float:left;
 	margin-right:-100px;
 	margin-top: 100px;
     width:100px;
+}
+
+.btn {
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #7e0961;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.btn:hover {
+  background: #d885f1;
+  background-image: -webkit-linear-gradient(top, violet, violet);
+  background-image: -moz-linear-gradient(top, violet, violet);
+  background-image: -ms-linear-gradient(top, violet, violet);
+  background-image: -o-linear-gradient(top, violet, violet);
+  background-image: linear-gradient(to bottom, violet, violet);
+  text-decoration: none;
+}
+
+.dropbtn {
+  
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50%;
+}
+
+.profile-picture-dashboard {
+  margin-left: 70px;
+  margin-top: 70px;
+  border-radius: 50%;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #a559d1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown:hover .dropdown-content {display: flex;}
+
+.modal {
+	display: flex; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  align-self: center;
+}
+
+.content {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: purple;
+    width: 300px;
+    height: 300px;
+}
+
+#modalButtoncreate {
+  margin-left: 250px;
+  transform: translateX(-50%);
 }

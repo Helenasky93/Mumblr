@@ -80,7 +80,7 @@ class PostForm extends React.Component {
             // debugger
 
         };
-        if (this.props.formType === 'Update Post') {
+        if (this.props.formType === 'Update') {
             formData.append('post[id]', this.state.id);
             
             debugger
@@ -155,9 +155,16 @@ class PostForm extends React.Component {
                         
                         {/* <input onChange={this.handleChange('post_type')} type="text" value={this.state.post_type || this.props?.post?.post_type} /> */}
                     </label>
-                    <label>File
-                        <input type="file" className="postFormFile" onChange={this.handleFile.bind(this)} />
-                    </label>
+                    
+                
+                            <div style={{ display: "block", textAlign: "center" }}>
+                                <label > <span className="btn">Select Image</span>
+                                    <input style={{ visibility: 'hidden', position: 'absolute' }} className="form-control" type="file" name="files" onChange={this.handleFile.bind(this)} />
+
+                                </label>
+
+                            </div>
+                    
         <button className='newPostFormButton'>{this.props.formType}</button>
                 <span id={'closeModal' + this.post.id}>Cancel</span>
                 </form>

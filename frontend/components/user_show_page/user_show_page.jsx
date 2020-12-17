@@ -96,11 +96,14 @@ class UserShowPage extends React.Component {
 
     render() {
         
-        
+        let showFollow = "" 
+        if (this.state.user.id !== this.props.currentUser.id) {
+            showFollow = <button onClick={this.handleFollow}>{this.state.isFollowing ? "Unfollow" : "Follow"}</button>
+        };
         console.log(this.state, "STATE")
         
         return(
-            <div>
+            <div className="user-show-page">
                 <hgroup>
                     <button onClick={this.props.logout}>Logout</button>
                     <br/>
@@ -109,7 +112,7 @@ class UserShowPage extends React.Component {
                 
                 <div>
                     {this.profilePicture()}
-        <button onClick={this.handleFollow}>{this.state.isFollowing ? "Unfollow" : "Follow" }</button>
+                    {showFollow}
                 </div>
                 <div>
                     {this.state.showPosts}

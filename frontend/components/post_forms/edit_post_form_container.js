@@ -7,7 +7,7 @@ const mstp = (state, ownProps) => {
     return {
         currentUser: state.session.currentUser,
         post: ownProps.post,
-        formType: 'Update Post'
+        formType: 'Update'
     };
 };
 

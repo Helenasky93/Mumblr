@@ -2,6 +2,7 @@ import React from 'react';
 import Post from '../post/post_container';
 import PostForm from '../post_forms/post_form_container';
 import UsersSidebar from './users_sidebar';
+import ProfilePictureModal from './update_profile_picture_modal_container';
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -18,10 +19,19 @@ class Dashboard extends React.Component {
             email: user.email,
             profile_picture: user.profile_picture,
             profile_picture_url: user.profile_picture_url,
+            show: false
             // followedUserIds: followedUserIds
         }
         
     }
+    showModal(e) {
+        this.setState({
+            show: true
+        });
+        this.setState({
+            show: !this.state.show
+        });
+    };
 
     handleSubmit(e) {
         e.preventDefault();
@@ -80,6 +90,7 @@ class Dashboard extends React.Component {
     // }
 
     render() {
+        
         let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
             return follow.user_id
         });
@@ -104,21 +115,47 @@ class Dashboard extends React.Component {
         })
         return (
             <div className='dashboard'>
-                <hgroup className='greetingBox'>
-                    <h2>Hi, {(this.props.currentUser.username)}!</h2>
-                    <button onClick={this.props.logout}>Log Out</button>
-                    <br/>
-                    <label>change profile picture
-                        <form className="changeProfilePictureForm" onSubmit={this.handleSubmit}>
-                            <input type="file" className="updateProfilePictureInput" onChange={this.updateProfilePicture}/>
-                            <button className="changeProfilePictureButton">update</button>
+                <div className="userInfo">
 
-                        </form>
+                    <img className="profile-picture-dashboard" height="100" width="100" src={this.props.currentUser.profile_picture_url || window.default_avatar} alt="profile_pic" />
+                    <div className='greetingBox'>
+                        <h2>Hi, {(this.props.currentUser.username)}!</h2>
+                        <div className="dropdown"> <img className="dropbtn" src={window.user_icon} alt="user_icon"/>
+                            <div className="dropdown-content">
 
-                    </label>
-                </hgroup>
-                <img height="100" width="100" src={this.props.currentUser.profile_picture_url || window.default_avatar} alt="profile pic" />
-                <PostForm />
+                                <button onClick={this.props.logout}>Log Out</button>
+                                <button className="toggle-button"
+                                    id="centered-toggle-button" onClick={e => {
+                                    this.showModal();
+                                }}>change picture
+
+                                <ProfilePictureModal onClose={this.showModal} show={this.state.show} />
+                                </button>
+                            
+                                {/* <label>change profile picture
+                                    <form className="changeProfilePictureForm" onSubmit={this.handleSubmit}>
+                                        <div>
+                                            <div style={{display:"block",textAlign:"center",marginTop:"20%"}}>
+                                                <label htmlFor="files"> <span className="btn">Select Image</span></label>
+                                                <input style={{visibility: 'hidden', position: 'absolute'}} id="files" className="form-control" type="file" name="files" onChange={this.updateProfilePicture}/>
+
+                                            </div>
+
+                                        </div>
+                                        
+                                        <button className="changeProfilePictureButton">change</button>
+
+                                    </form>
+
+                                </label> */}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="postForm">
+
+                    <PostForm />
+                </div>
                 <div className='leftColumn'>
                     {showPosts}
                 </div>

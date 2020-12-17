@@ -39,10 +39,10 @@ class Post extends React.Component {
         console.log(this.state.currentUser, this.state.author);
         if ((this.state.currentUser && this.state.author) && this.state.currentUser.id === this.state.author.id) {
             return (
-                <div>
+                <div className="edit-delete-buttons">
 
                     <EditPostForm post={post} />
-                    <button onClick={() => this.props.deletePost(post.id)}>Delete Post</button>
+                    <button className="delete-button" onClick={() => this.props.deletePost(post.id)}>Delete</button>
                 </div>
             );
         };
@@ -65,13 +65,14 @@ class Post extends React.Component {
                         {media}
                     </div>
                 </div>
-                {/* <EditPostForm post={post}/> */}
-                {this.edit()}
-                {/* <button onClick={() => this.props.deletePost(post.id)}>Delete Post</button> */}
-        <button onClick={this.toggleLike}>
-            {this.state.liked ? 'Unlike' : 'Like'}
-        </button>
-        <div>{post.likes}</div>
+                <div className="post-buttons">
+                    {this.edit()}
+                    <button className="like-toggle" onClick={this.toggleLike}>
+                        {this.state.liked ? 'Unlike' : 'Like'}
+                    </button>
+                    <div>{post.likes}</div>
+
+                </div>
             </div>
         )
     }
