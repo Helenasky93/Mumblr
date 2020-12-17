@@ -22,32 +22,28 @@ class ProfilePictureModal extends React.Component {
     };
 
     updateProfilePicture(e) {
-        e.preventDefault();
+        // e.preventDefault();
+        // e.stopPropagation();
         const reader = new FileReader();
         const picture = e.currentTarget.files[0];
         reader.onloadend = () => {
             this.setState({ profile_picture_url: reader.result, profile_picture: picture });
-
+            
         }
         reader.readAsDataURL(picture);
         this.setState({ profile_picture: e.currentTarget.files[0] });
-
+        
 
     };
 
     handleSubmit(e) {
-        e.preventDefault();
+        // e.preventDefault();
+        // e.stopImmediatePropagation();
         const user = Object.assign({}, this.state);
         this.props.updateProfilePicture(user);
+        this.props.onClose();
     };
 
-    onClose(e) {
-        e.preventDefault();
-        this.props.show = false;
-        this.props.onClose && this.props.onClose(e);
-            
-       
-    };
     
 
     
@@ -63,7 +59,7 @@ class ProfilePictureModal extends React.Component {
                 <div className='content'>Hello Modal
                     <div className='actions'>
                         <label>change profile picture
-                            <form className="changeProfilePictureForm" onSubmit={this.handleSubmit}>
+                            <form className="changeProfilePictureForm" >
                                 <div>
                                     <div style={{ display: "block", textAlign: "center", marginTop: "20%" }}>
                                         <label > <span className="btn">Select Image</span>
@@ -76,15 +72,13 @@ class ProfilePictureModal extends React.Component {
 
                                 </div>
 
+                                <input  type="button" value="change" className="changeProfilePictureButton" onClick={this.handleSubmit}/>
 
                             </form>
 
                         </label>
                         
                     </div>
-                                <input  type="button" value="change" className="changeProfilePictureButton" onClose={e => {
-                                    this.onClose(e);
-                                }} onClick={this.handleSubmit}/>
                 </div>
 
             </div>

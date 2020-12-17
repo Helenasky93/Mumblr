@@ -7,30 +7,33 @@ import ProfilePictureModal from './update_profile_picture_modal_container';
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.updateProfilePicture = this.updateProfilePicture.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        // this.updateProfilePicture = this.updateProfilePicture.bind(this);
+        // this.handleSubmit = this.handleSubmit.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
         let user = this.props.currentUser
         // let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
         //     return follow.user_id
         // });
         this.state = {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            profile_picture: user.profile_picture,
-            profile_picture_url: user.profile_picture_url,
+            // id: user.id,
+            // username: user.username,
+            // email: user.email,
+            // profile_picture: user.profile_picture,
+            // profile_picture_url: user.profile_picture_url,
             show: false
             // followedUserIds: followedUserIds
         }
         
     }
-    showModal(e) {
-        this.setState({
-            show: true
-        });
+    toggleModal(e) {
+        // e.preventDefault()
+        // this.setState({
+        //     show: true
+        // });
         this.setState({
             show: !this.state.show
         });
+        // e.stopImmediatePropagation()
     };
 
     handleSubmit(e) {
@@ -39,19 +42,19 @@ class Dashboard extends React.Component {
         this.props.updateProfilePicture(user);
     }
 
-    updateProfilePicture(e) {
-        e.preventDefault();
-        const reader = new FileReader();
-        const picture = e.currentTarget.files[0];
-        reader.onloadend = () => {
-            this.setState({ profile_picture_url: reader.result, profile_picture: picture });
+    // updateProfilePicture(e) {
+    //     e.preventDefault();
+    //     const reader = new FileReader();
+    //     const picture = e.currentTarget.files[0];
+    //     reader.onloadend = () => {
+    //         this.setState({ profile_picture_url: reader.result, profile_picture: picture });
 
-        } 
-        reader.readAsDataURL(picture);
-        this.setState({profile_picture: e.currentTarget.files[0]});
+    //     } 
+    //     reader.readAsDataURL(picture);
+    //     this.setState({profile_picture: e.currentTarget.files[0]});
         
         
-    }
+    // }
 
     componentDidMount() {
         this.props.fetchAllPosts();
@@ -116,6 +119,7 @@ class Dashboard extends React.Component {
         return (
             <div className='dashboard'>
                 <div className="userInfo">
+                    <ProfilePictureModal onClose={this.toggleModal} show={this.state.show} />
 
                     <img className="profile-picture-dashboard" height="100" width="100" src={this.props.currentUser.profile_picture_url || window.default_avatar} alt="profile_pic" />
                     <div className='greetingBox'>
@@ -126,10 +130,9 @@ class Dashboard extends React.Component {
                                 <button onClick={this.props.logout}>Log Out</button>
                                 <button className="toggle-button"
                                     id="centered-toggle-button" onClick={e => {
-                                    this.showModal();
+                                    this.toggleModal();
                                 }}>change picture
 
-                                <ProfilePictureModal onClose={this.showModal} show={this.state.show} />
                                 </button>
                             
                                 {/* <label>change profile picture

@@ -513,19 +513,20 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, Dashboard);
 
-    _this = _super.call(this, props);
-    _this.updateProfilePicture = _this.updateProfilePicture.bind(_assertThisInitialized(_this));
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this = _super.call(this, props); // this.updateProfilePicture = this.updateProfilePicture.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
+
+    _this.toggleModal = _this.toggleModal.bind(_assertThisInitialized(_this));
     var user = _this.props.currentUser; // let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
     //     return follow.user_id
     // });
 
     _this.state = {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      profile_picture: user.profile_picture,
-      profile_picture_url: user.profile_picture_url,
+      // id: user.id,
+      // username: user.username,
+      // email: user.email,
+      // profile_picture: user.profile_picture,
+      // profile_picture_url: user.profile_picture_url,
       show: false // followedUserIds: followedUserIds
 
     };
@@ -533,14 +534,15 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Dashboard, [{
-    key: "showModal",
-    value: function showModal(e) {
-      this.setState({
-        show: true
-      });
+    key: "toggleModal",
+    value: function toggleModal(e) {
+      // e.preventDefault()
+      // this.setState({
+      //     show: true
+      // });
       this.setState({
         show: !this.state.show
-      });
+      }); // e.stopImmediatePropagation()
     }
   }, {
     key: "handleSubmit",
@@ -548,28 +550,17 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
       this.props.updateProfilePicture(user);
-    }
-  }, {
-    key: "updateProfilePicture",
-    value: function updateProfilePicture(e) {
-      var _this2 = this;
+    } // updateProfilePicture(e) {
+    //     e.preventDefault();
+    //     const reader = new FileReader();
+    //     const picture = e.currentTarget.files[0];
+    //     reader.onloadend = () => {
+    //         this.setState({ profile_picture_url: reader.result, profile_picture: picture });
+    //     } 
+    //     reader.readAsDataURL(picture);
+    //     this.setState({profile_picture: e.currentTarget.files[0]});
+    // }
 
-      e.preventDefault();
-      var reader = new FileReader();
-      var picture = e.currentTarget.files[0];
-
-      reader.onloadend = function () {
-        _this2.setState({
-          profile_picture_url: reader.result,
-          profile_picture: picture
-        });
-      };
-
-      reader.readAsDataURL(picture);
-      this.setState({
-        profile_picture: e.currentTarget.files[0]
-      });
-    }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
@@ -602,7 +593,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var followedUserIds = Object.values(this.props.currentUser.followed_users).map(function (follow) {
         return follow.user_id;
@@ -627,7 +618,10 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
         className: "dashboard"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "userInfo"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_update_profile_picture_modal_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        onClose: this.toggleModal,
+        show: this.state.show
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "profile-picture-dashboard",
         height: "100",
         width: "100",
@@ -649,12 +643,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
         className: "toggle-button",
         id: "centered-toggle-button",
         onClick: function onClick(e) {
-          _this3.showModal();
+          _this2.toggleModal();
         }
-      }, "change picture", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_update_profile_picture_modal_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        onClose: this.showModal,
-        show: this.state.show
-      })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "change picture"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "postForm"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_post_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "leftColumn"
@@ -804,7 +795,8 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
     value: function updateProfilePicture(e) {
       var _this2 = this;
 
-      e.preventDefault();
+      // e.preventDefault();
+      // e.stopPropagation();
       var reader = new FileReader();
       var picture = e.currentTarget.files[0];
 
@@ -823,22 +815,15 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      e.preventDefault();
+      // e.preventDefault();
+      // e.stopImmediatePropagation();
       var user = Object.assign({}, this.state);
       this.props.updateProfilePicture(user);
-    }
-  }, {
-    key: "onClose",
-    value: function onClose(e) {
-      e.preventDefault();
-      this.props.show = false;
-      this.props.onClose && this.props.onClose(e);
+      this.props.onClose();
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
-
       if (!this.props.show) {
         return null;
       }
@@ -851,8 +836,7 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
       }, "Hello Modal", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "actions"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "change profile picture", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "changeProfilePictureForm",
-        onSubmit: this.handleSubmit
+        className: "changeProfilePictureForm"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           display: "block",
@@ -870,15 +854,12 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
         type: "file",
         name: "files",
         onChange: this.updateProfilePicture
-      }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "button",
         value: "change",
         className: "changeProfilePictureButton",
-        onClose: function onClose(e) {
-          _this3.onClose(e);
-        },
         onClick: this.handleSubmit
-      })));
+      }))))));
     }
   }]);
 
