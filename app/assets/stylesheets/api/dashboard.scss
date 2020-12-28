@@ -35,12 +35,19 @@
 }
 
 .sidebar {
-	border: dotted;
-    float:left;
-	margin-right:-100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-style: solid;
+  border-radius: 10px;
+  float:left;
+  background-color: pink;
 	margin-top: 100px;
-    width:100px;
+  width:210px;
+  margin-left:75px;
+
 }
+
 
 .btn {
   font-family: Arial;
@@ -71,9 +78,33 @@
   border-radius: 50%;
 }
 
+
 .profile-picture-dashboard {
   margin-left: 70px;
   margin-top: 70px;
+  border-radius: 50%;
+}
+
+.sidebarLink {
+  margin-left: 30px;
+  display:inline-block;
+  padding:0.7em 1.4em;
+  margin:0 0.3em 0.3em 0;
+  border-radius:10px;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:400;
+  color:#030303;
+  background-color:#ad33ff;
+  box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+  text-align:center;
+  position:relative;
+
+  
+}
+
+.profile-picture {
   border-radius: 50%;
 }
 

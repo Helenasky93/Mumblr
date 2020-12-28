@@ -1,6 +1,5 @@
 import React from 'react';
 import Post from '../post/post_container';
-// import avatar from '../../app/assets/images/default_avatar.png';
 
 
 class UserShowPage extends React.Component {
@@ -65,7 +64,7 @@ class UserShowPage extends React.Component {
         this.props.allUsers();
         this.props.fetchAllPosts();
         this.props.fetchAllFollows();
-        // this.setState({});
+        
         
     }
 
@@ -81,7 +80,6 @@ class UserShowPage extends React.Component {
             this.setState({ isFollowing: true });
         };
         this.props.fetchAllFollows();
-        // this.setState({isFollowing: isFollowing})
         console.log(isFollowing, "FOLLOWING")
 
     }

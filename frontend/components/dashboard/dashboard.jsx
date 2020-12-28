@@ -7,33 +7,20 @@ import ProfilePictureModal from './update_profile_picture_modal_container';
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        // this.updateProfilePicture = this.updateProfilePicture.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        let user = this.props.currentUser
-        // let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
-        //     return follow.user_id
-        // });
+        // let user = this.props.currentUser
+        
         this.state = {
-            // id: user.id,
-            // username: user.username,
-            // email: user.email,
-            // profile_picture: user.profile_picture,
-            // profile_picture_url: user.profile_picture_url,
             show: false
-            // followedUserIds: followedUserIds
         }
         
     }
     toggleModal(e) {
-        // e.preventDefault()
-        // this.setState({
-        //     show: true
-        // });
+        
         this.setState({
             show: !this.state.show
         });
-        // e.stopImmediatePropagation()
+
     };
 
     handleSubmit(e) {
@@ -42,19 +29,6 @@ class Dashboard extends React.Component {
         this.props.updateProfilePicture(user);
     }
 
-    // updateProfilePicture(e) {
-    //     e.preventDefault();
-    //     const reader = new FileReader();
-    //     const picture = e.currentTarget.files[0];
-    //     reader.onloadend = () => {
-    //         this.setState({ profile_picture_url: reader.result, profile_picture: picture });
-
-    //     } 
-    //     reader.readAsDataURL(picture);
-    //     this.setState({profile_picture: e.currentTarget.files[0]});
-        
-        
-    // }
 
     componentDidMount() {
         this.props.fetchAllPosts();
@@ -64,44 +38,16 @@ class Dashboard extends React.Component {
         this.props.getCurrentUser(this.props.currentUser.id);
     }
 
-    // componentDidUpdate() {
-    //     this.props.fetchAllFollows();
-    // }
-
-
-    // static getDerivedStateFromProps(props, state) {
-    //     let nextFollowedUserIds = Object.values(props.currentUser.followed_users).map((follow) => {
-    //         return follow.user_id
-    //     });
-    //     return {followedUserIds: nextFollowedUserIds}
-
-    // }
-
-    // shouldComponentUpdate(nextProps) {
-    //     let nextFollowedUserIds = Object.values(nextProps.currentUser.followed_users).map((follow) => {
-    //         return follow.user_id
-    //     });
-    //     return this.state.followedUserIds === nextFollowedUserIds
-    // }
-
-    // componentDidUpdate() {
-        
-    //     this.setState({
-    //         followedUserIds: nextFollowedUserIds
-    //     });
-       
-    // }
 
     render() {
         
         let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
             return follow.user_id
         });
-        // debugger
-        // filter posts by author_id === current_user.id or author_id === current_user.followed_users.user_id
+        
         let posts = this.props.posts;
         let currentUser = this.props.currentUser;
-        // let followedUserIds = this.state.followedUserIds;
+        
 
         console.log(followedUserIds, "FOLLOWED USERS IDS")
         let showPosts = posts.map((post,idx) => {
@@ -135,22 +81,7 @@ class Dashboard extends React.Component {
 
                                 </button>
                             
-                                {/* <label>change profile picture
-                                    <form className="changeProfilePictureForm" onSubmit={this.handleSubmit}>
-                                        <div>
-                                            <div style={{display:"block",textAlign:"center",marginTop:"20%"}}>
-                                                <label htmlFor="files"> <span className="btn">Select Image</span></label>
-                                                <input style={{visibility: 'hidden', position: 'absolute'}} id="files" className="form-control" type="file" name="files" onChange={this.updateProfilePicture}/>
-
-                                            </div>
-
-                                        </div>
-                                        
-                                        <button className="changeProfilePictureButton">change</button>
-
-                                    </form>
-
-                                </label> */}
+                                
                             </div>
                         </div>
                     </div>
@@ -162,7 +93,7 @@ class Dashboard extends React.Component {
                 <div className='leftColumn'>
                     {showPosts}
                 </div>
-                <div >
+                <div className="users-sidebar-dashboard">Check out other people!
                     <UsersSidebar allUsers={this.props.users} />
                 </div>
             </div>

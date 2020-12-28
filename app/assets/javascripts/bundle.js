@@ -513,22 +513,11 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, Dashboard);
 
-    _this = _super.call(this, props); // this.updateProfilePicture = this.updateProfilePicture.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
-
-    _this.toggleModal = _this.toggleModal.bind(_assertThisInitialized(_this));
-    var user = _this.props.currentUser; // let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
-    //     return follow.user_id
-    // });
+    _this = _super.call(this, props);
+    _this.toggleModal = _this.toggleModal.bind(_assertThisInitialized(_this)); // let user = this.props.currentUser
 
     _this.state = {
-      // id: user.id,
-      // username: user.username,
-      // email: user.email,
-      // profile_picture: user.profile_picture,
-      // profile_picture_url: user.profile_picture_url,
-      show: false // followedUserIds: followedUserIds
-
+      show: false
     };
     return _this;
   }
@@ -536,13 +525,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
   _createClass(Dashboard, [{
     key: "toggleModal",
     value: function toggleModal(e) {
-      // e.preventDefault()
-      // this.setState({
-      //     show: true
-      // });
       this.setState({
         show: !this.state.show
-      }); // e.stopImmediatePropagation()
+      });
     }
   }, {
     key: "handleSubmit",
@@ -550,17 +535,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
       this.props.updateProfilePicture(user);
-    } // updateProfilePicture(e) {
-    //     e.preventDefault();
-    //     const reader = new FileReader();
-    //     const picture = e.currentTarget.files[0];
-    //     reader.onloadend = () => {
-    //         this.setState({ profile_picture_url: reader.result, profile_picture: picture });
-    //     } 
-    //     reader.readAsDataURL(picture);
-    //     this.setState({profile_picture: e.currentTarget.files[0]});
-    // }
-
+    }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
@@ -569,27 +544,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       this.props.allUsers();
       this.props.fetchAllFollows();
       this.props.getCurrentUser(this.props.currentUser.id);
-    } // componentDidUpdate() {
-    //     this.props.fetchAllFollows();
-    // }
-    // static getDerivedStateFromProps(props, state) {
-    //     let nextFollowedUserIds = Object.values(props.currentUser.followed_users).map((follow) => {
-    //         return follow.user_id
-    //     });
-    //     return {followedUserIds: nextFollowedUserIds}
-    // }
-    // shouldComponentUpdate(nextProps) {
-    //     let nextFollowedUserIds = Object.values(nextProps.currentUser.followed_users).map((follow) => {
-    //         return follow.user_id
-    //     });
-    //     return this.state.followedUserIds === nextFollowedUserIds
-    // }
-    // componentDidUpdate() {
-    //     this.setState({
-    //         followedUserIds: nextFollowedUserIds
-    //     });
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -597,12 +552,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
 
       var followedUserIds = Object.values(this.props.currentUser.followed_users).map(function (follow) {
         return follow.user_id;
-      }); // debugger
-      // filter posts by author_id === current_user.id or author_id === current_user.followed_users.user_id
-
+      });
       var posts = this.props.posts;
-      var currentUser = this.props.currentUser; // let followedUserIds = this.state.followedUserIds;
-
+      var currentUser = this.props.currentUser;
       console.log(followedUserIds, "FOLLOWED USERS IDS");
       var showPosts = posts.map(function (post, idx) {
         if (post.author_id === currentUser.id || followedUserIds.includes(post.author_id)) {
@@ -649,7 +601,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
         className: "postForm"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_post_forms_post_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "leftColumn"
-      }, showPosts), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_users_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, showPosts), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "users-sidebar-dashboard"
+      }, "Check out other people!", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_users_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], {
         allUsers: this.props.users
       })));
     }
@@ -774,18 +728,14 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.updateProfilePicture = _this.updateProfilePicture.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    var user = _this.props.currentUser; // let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
-    //     return follow.user_id
-    // });
-
+    var user = _this.props.currentUser;
     console.log(props, "PROPS");
     _this.state = {
       id: user.id,
       username: user.username,
       email: user.email,
       profile_picture: user.profile_picture,
-      profile_picture_url: user.profile_picture_url // followedUserIds: followedUserIds
-
+      profile_picture_url: user.profile_picture_url
     };
     return _this;
   }
@@ -795,8 +745,6 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
     value: function updateProfilePicture(e) {
       var _this2 = this;
 
-      // e.preventDefault();
-      // e.stopPropagation();
       var reader = new FileReader();
       var picture = e.currentTarget.files[0];
 
@@ -815,8 +763,6 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      // e.preventDefault();
-      // e.stopImmediatePropagation();
       var user = Object.assign({}, this.state);
       this.props.updateProfilePicture(user);
       this.props.onClose();
@@ -944,17 +890,18 @@ var UsersSidebar = function UsersSidebar(props) {
     users = Object.values(props.allUsers.allUsers); // console.log(users, "ALL USERS")
 
     showUsers = users.map(function (user, idx) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/users/".concat(user.id),
         key: idx,
         className: "sidebarLink"
-      }, user.username, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }, user.username, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         height: "100",
         width: "100",
         id: idx,
         src: user.profile_picture_url || window.default_avatar,
+        className: "profile-picture",
         alt: "profile_pic"
-      }));
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
     });
   }
 
@@ -2035,7 +1982,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
- // import avatar from '../../app/assets/images/default_avatar.png';
+
 
 var UserShowPage = /*#__PURE__*/function (_React$Component) {
   _inherits(UserShowPage, _React$Component);
@@ -2064,7 +2011,7 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       this.props.allUsers();
       this.props.fetchAllPosts();
-      this.props.fetchAllFollows(); // this.setState({});
+      this.props.fetchAllFollows();
     }
   }, {
     key: "handleFollow",
@@ -2085,8 +2032,7 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
       }
 
       ;
-      this.props.fetchAllFollows(); // this.setState({isFollowing: isFollowing})
-
+      this.props.fetchAllFollows();
       console.log(isFollowing, "FOLLOWING");
     }
   }, {

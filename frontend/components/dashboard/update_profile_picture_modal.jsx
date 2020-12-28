@@ -7,9 +7,7 @@ class ProfilePictureModal extends React.Component {
         this.updateProfilePicture = this.updateProfilePicture.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         let user = this.props.currentUser
-        // let followedUserIds = Object.values(this.props.currentUser.followed_users).map((follow) => {
-        //     return follow.user_id
-        // });
+        
         console.log(props, "PROPS");
         this.state = {
             id: user.id,
@@ -17,13 +15,11 @@ class ProfilePictureModal extends React.Component {
             email: user.email,
             profile_picture: user.profile_picture,
             profile_picture_url: user.profile_picture_url
-            // followedUserIds: followedUserIds
+           
         }
     };
 
     updateProfilePicture(e) {
-        // e.preventDefault();
-        // e.stopPropagation();
         const reader = new FileReader();
         const picture = e.currentTarget.files[0];
         reader.onloadend = () => {
@@ -37,8 +33,6 @@ class ProfilePictureModal extends React.Component {
     };
 
     handleSubmit(e) {
-        // e.preventDefault();
-        // e.stopImmediatePropagation();
         const user = Object.assign({}, this.state);
         this.props.updateProfilePicture(user);
         this.props.onClose();
