@@ -13,7 +13,7 @@ class UserShowPage extends React.Component {
 
         }
         
-        console.log(this.props.users, "ALL USERS")
+        
         this.handleFollow = this.handleFollow.bind(this);
         this.profilePicture = this.profilePicture.bind(this);
         
@@ -30,17 +30,13 @@ class UserShowPage extends React.Component {
                 return value.user_id;
             });
             
-            console.warn(props.currentUser
-                , 'FOLLOWED USERS')
-            
            
-            console.log(props.currentUser.followed_users.length, followedUserIds.includes(user.id), user.id)
             if (props.currentUser.followed_users.length && followedUserIds.includes(user.id)) {
                 isFollowing = true
             } else {
                 isFollowing = false
             };
-            console.log(isFollowing, 'FOLLOWING')
+            
 
             let posts = Object.values(props.posts).filter(value => {
                 return value.author_id === user.id
@@ -80,11 +76,11 @@ class UserShowPage extends React.Component {
             this.setState({ isFollowing: true });
         };
         this.props.fetchAllFollows();
-        console.log(isFollowing, "FOLLOWING")
+       
 
     }
     profilePicture() {
-        console.log(this.state.user, "PROFILE PICTURE USER")
+        
     if (this.state.user) {
         return (
             <img height='150' width='150' src={this.state.user.profile_picture_url || window.default_avatar } alt="profile_pic" />
@@ -98,7 +94,7 @@ class UserShowPage extends React.Component {
         if (this.state.user.id !== this.props.currentUser.id) {
             showFollow = <button onClick={this.handleFollow}>{this.state.isFollowing ? "Unfollow" : "Follow"}</button>
         };
-        console.log(this.state, "STATE")
+        
         
         return(
             <div className="user-show-page">

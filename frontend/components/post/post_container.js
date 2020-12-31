@@ -7,7 +7,7 @@ import {likePost, unlikePost} from '../../actions/like_actions'
 const mstp = (state,ownProps) => {
     const authorId = ownProps.post.author_id;
     let liked = false;
-    // setTimeout(() => console.log(state.entities.likes), 3000)
+    
     Object.values(state.entities.likes).forEach((like) => {
         if (like["post_id"] === ownProps.post.id) {
             liked = true

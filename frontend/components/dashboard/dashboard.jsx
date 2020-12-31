@@ -49,7 +49,7 @@ class Dashboard extends React.Component {
         let currentUser = this.props.currentUser;
         
 
-        console.log(followedUserIds, "FOLLOWED USERS IDS")
+       
         let showPosts = posts.map((post,idx) => {
             if (post.author_id === currentUser.id || followedUserIds.includes(post.author_id) ) {
 

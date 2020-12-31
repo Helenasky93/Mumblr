@@ -27,15 +27,7 @@ class PostForm extends React.Component {
 
             }
         };
-        // this.state = ({
-        //     title:'',
-        //     body: '',
-        //     post_type: '',
-        //     id: postId,
-        //     fileURL: '',
-        //     file: ''
-
-        // })
+        
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.post = this.props.post || {id: 'create'}
@@ -65,9 +57,9 @@ class PostForm extends React.Component {
         // } else {
         //     this.props.action(this.state);
         // };
-        // debugger
+      
         const formData = new FormData();
-        // debugger
+      
         
         formData.append('post[title]', this.state.title);
         formData.append('post[body]', this.state.body);
@@ -77,13 +69,12 @@ class PostForm extends React.Component {
             // put fileurl appending in if/else statement just in case
             // posts are created without a file
             formData.append('post[file_url]', this.state.fileUrl);
-            // debugger
+            
 
         };
         if (this.props.formType === 'Update') {
             formData.append('post[id]', this.state.id);
             
-            debugger
         };
     
         this.props.action(formData);

@@ -50,11 +50,10 @@ export const logout = () => dispatch => {
 };
 
 export const updateProfilePicture = user => dispatch => {
-    // debugger
-    // console.log(user)
+   
     return sessionApiUtil.updateProfilePicture(user)
     .then(user => {
-        console.log('SOUPPPPPP', user)
+        
         return dispatch(receiveCurrentUser(user))
     },
     err => {

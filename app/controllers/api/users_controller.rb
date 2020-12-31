@@ -23,7 +23,7 @@ class Api::UsersController < ApplicationController
     end
 
     def update
-        # debugger
+       
         @user = User.find(params[:id])
         p @user
         p user_params

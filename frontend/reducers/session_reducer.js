@@ -2,7 +2,7 @@ import {RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, FETCH_CURRENT_USER} from '../
 
 const _nullUser = Object.freeze({id: null});
 const sessionReducer = (state = _nullUser, action) => {
-    // console.log(action)
+    
     Object.freeze(state);
     let newState = {};
     switch (action.type) {

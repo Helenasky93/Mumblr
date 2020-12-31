@@ -2,16 +2,14 @@ import React from "react";
 import { Link } from 'react-router-dom';
 
 const UsersSidebar = props => {
-    // debugger
-    // let users = props.
-    // let showUsers = 
+   
     let users
     let showUsers
    
     if (props.allUsers && props.allUsers.allUsers) {
 
         users = Object.values(props.allUsers.allUsers);
-        // console.log(users, "ALL USERS")
+        
 
         showUsers = users.map((user, idx) => {
             return(

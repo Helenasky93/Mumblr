@@ -385,10 +385,7 @@ var logout = function logout() {
 };
 var updateProfilePicture = function updateProfilePicture(user) {
   return function (dispatch) {
-    // debugger
-    // console.log(user)
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_1__["updateProfilePicture"](user).then(function (user) {
-      console.log('SOUPPPPPP', user);
       return dispatch(receiveCurrentUser(user));
     }, function (err) {
       console.error('ERROR SOUP', err);
@@ -555,7 +552,6 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       });
       var posts = this.props.posts;
       var currentUser = this.props.currentUser;
-      console.log(followedUserIds, "FOLLOWED USERS IDS");
       var showPosts = posts.map(function (post, idx) {
         if (post.author_id === currentUser.id || followedUserIds.includes(post.author_id)) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -729,7 +725,6 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
     _this.updateProfilePicture = _this.updateProfilePicture.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     var user = _this.props.currentUser;
-    console.log(props, "PROPS");
     _this.state = {
       id: user.id,
       username: user.username,
@@ -880,15 +875,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var UsersSidebar = function UsersSidebar(props) {
-  // debugger
-  // let users = props.
-  // let showUsers = 
   var users;
   var showUsers;
 
   if (props.allUsers && props.allUsers.allUsers) {
-    users = Object.values(props.allUsers.allUsers); // console.log(users, "ALL USERS")
-
+    users = Object.values(props.allUsers.allUsers);
     showUsers = users.map(function (user, idx) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/users/".concat(user.id),
@@ -1066,7 +1057,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleLike",
     value: function toggleLike() {
-      var post = this.props.post; // debugger
+      var post = this.props.post;
 
       if (this.state.liked) {
         this.props.unlikePost(post.id);
@@ -1082,7 +1073,6 @@ var Post = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var post = this.props.post;
-      console.log(this.state.currentUser, this.state.author);
 
       if (this.state.currentUser && this.state.author && this.state.currentUser.id === this.state.author.id) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1169,8 +1159,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var mstp = function mstp(state, ownProps) {
   var authorId = ownProps.post.author_id;
-  var liked = false; // setTimeout(() => console.log(state.entities.likes), 3000)
-
+  var liked = false;
   Object.values(state.entities.likes).forEach(function (like) {
     if (like["post_id"] === ownProps.post.id) {
       liked = true;
@@ -1390,15 +1379,7 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
       };
     }
 
-    ; // this.state = ({
-    //     title:'',
-    //     body: '',
-    //     post_type: '',
-    //     id: postId,
-    //     fileURL: '',
-    //     file: ''
-    // })
-
+    ;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.post = _this.props.post || {
       id: 'create'
@@ -1443,10 +1424,8 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
       // } else {
       //     this.props.action(this.state);
       // };
-      // debugger
 
-      var formData = new FormData(); // debugger
-
+      var formData = new FormData();
       formData.append('post[title]', this.state.title);
       formData.append('post[body]', this.state.body);
       formData.append('post[post_type]', this.state.post_type);
@@ -1455,14 +1434,13 @@ var PostForm = /*#__PURE__*/function (_React$Component) {
         formData.append('post[file]', this.state.file); // put fileurl appending in if/else statement just in case
         // posts are created without a file
 
-        formData.append('post[file_url]', this.state.fileUrl); // debugger
+        formData.append('post[file_url]', this.state.fileUrl);
       }
 
       ;
 
       if (this.props.formType === 'Update') {
         formData.append('post[id]', this.state.id);
-        debugger;
       }
 
       ;
@@ -2000,7 +1978,6 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
       showPosts: null,
       isFollowing: null
     };
-    console.log(_this.props.users, "ALL USERS");
     _this.handleFollow = _this.handleFollow.bind(_assertThisInitialized(_this));
     _this.profilePicture = _this.profilePicture.bind(_assertThisInitialized(_this));
     return _this;
@@ -2033,13 +2010,10 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
 
       ;
       this.props.fetchAllFollows();
-      console.log(isFollowing, "FOLLOWING");
     }
   }, {
     key: "profilePicture",
     value: function profilePicture() {
-      console.log(this.state.user, "PROFILE PICTURE USER");
-
       if (this.state.user) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           height: "150",
@@ -2061,7 +2035,6 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
       }
 
       ;
-      console.log(this.state, "STATE");
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-show-page"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2077,8 +2050,6 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
         var followedUserIds = Object.values(props.currentUser.followed_users).map(function (value) {
           return value.user_id;
         });
-        console.warn(props.currentUser, 'FOLLOWED USERS');
-        console.log(props.currentUser.followed_users.length, followedUserIds.includes(user.id), user.id);
 
         if (props.currentUser.followed_users.length && followedUserIds.includes(user.id)) {
           isFollowing = true;
@@ -2087,7 +2058,6 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
         }
 
         ;
-        console.log(isFollowing, 'FOLLOWING');
         var posts = Object.values(props.posts).filter(function (value) {
           return value.author_id === user.id;
         });
@@ -2481,7 +2451,6 @@ var _nullUser = Object.freeze({
 var sessionReducer = function sessionReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _nullUser;
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  // console.log(action)
   Object.freeze(state);
   var newState = {};
 
@@ -2530,11 +2499,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var usersReducer = function usersReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  Object.freeze(state); // console.log(action)
+  Object.freeze(state);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      // debugger
       return Object.assign({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
 
     default:

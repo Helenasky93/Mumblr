@@ -26,7 +26,7 @@ class Post extends React.Component {
 
     toggleLike() {
         const post = this.props.post;
-        // debugger
+    
         if (this.state.liked) {
             this.props.unlikePost(post.id);
         } else {
@@ -36,7 +36,7 @@ class Post extends React.Component {
 
     edit() {
         let post = this.props.post
-        console.log(this.state.currentUser, this.state.author);
+        
         if ((this.state.currentUser && this.state.author) && this.state.currentUser.id === this.state.author.id) {
             return (
                 <div className="edit-delete-buttons">

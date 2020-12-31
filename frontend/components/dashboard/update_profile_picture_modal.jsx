@@ -8,7 +8,7 @@ class ProfilePictureModal extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         let user = this.props.currentUser
         
-        console.log(props, "PROPS");
+        
         this.state = {
             id: user.id,
             username: user.username,
