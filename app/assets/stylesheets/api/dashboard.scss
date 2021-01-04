@@ -12,6 +12,10 @@
 	background-size: cover;
 }
 
+.show-page-posts {
+  align-self: center;
+}
+
 .leftColumn {
 	grid-column-start: 2;
 	grid-column-end: 3;
@@ -42,7 +46,7 @@
   border-radius: 10px;
   float:left;
   background-color: pink;
-	margin-top: 100px;
+	margin-top: 0px;
   width:210px;
   margin-left:75px;
 
@@ -155,4 +159,13 @@
 #modalButtoncreate {
   margin-left: 250px;
   transform: translateX(-50%);
+}
+
+.users-sidebar-dashboard {
+  display: flex;
+  flex-direction: column;
+}
+#check-out {
+  font-size: 200%;
+  margin-top: 100px;
 }

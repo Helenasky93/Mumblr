@@ -83,7 +83,7 @@ class UserShowPage extends React.Component {
         
     if (this.state.user) {
         return (
-            <img height='150' width='150' src={this.state.user.profile_picture_url || window.default_avatar } alt="profile_pic" />
+            <img height='150' width='150' className="profile-picture" src={this.state.user.profile_picture_url || window.default_avatar } alt="profile_pic" />
         )
     }
 };
@@ -91,7 +91,7 @@ class UserShowPage extends React.Component {
     render() {
         
         let showFollow = "" 
-        if (this.state.user.id !== this.props.currentUser.id) {
+        if ((this.state.user && this.state.user.id !== this.props.currentUser.id) ) {
             showFollow = <button onClick={this.handleFollow}>{this.state.isFollowing ? "Unfollow" : "Follow"}</button>
         };
         
@@ -108,7 +108,7 @@ class UserShowPage extends React.Component {
                     {this.profilePicture()}
                     {showFollow}
                 </div>
-                <div>
+                <div className="show-page-posts">
                     {this.state.showPosts}
                 </div>
                 

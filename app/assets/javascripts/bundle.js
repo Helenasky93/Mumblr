@@ -599,7 +599,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
         className: "leftColumn"
       }, showPosts), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "users-sidebar-dashboard"
-      }, "Check out other people!", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_users_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        id: "check-out"
+      }, "Check out other people!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_users_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], {
         allUsers: this.props.users
       })));
     }
@@ -2018,6 +2020,7 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           height: "150",
           width: "150",
+          className: "profile-picture",
           src: this.state.user.profile_picture_url || window.default_avatar,
           alt: "profile_pic"
         });
@@ -2028,7 +2031,7 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var showFollow = "";
 
-      if (this.state.user.id !== this.props.currentUser.id) {
+      if (this.state.user && this.state.user.id !== this.props.currentUser.id) {
         showFollow = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: this.handleFollow
         }, this.state.isFollowing ? "Unfollow" : "Follow");
@@ -2039,7 +2042,9 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
         className: "user-show-page"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
-      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.profilePicture(), showFollow), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.showPosts));
+      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.profilePicture(), showFollow), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "show-page-posts"
+      }, this.state.showPosts));
     }
   }], [{
     key: "getDerivedStateFromProps",
