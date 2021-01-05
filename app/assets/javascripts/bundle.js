@@ -586,6 +586,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "logout-show-page",
         onClick: this.props.logout
       }, "Log Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "toggle-button",
@@ -772,19 +773,28 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "newPostFormDiv",
+        style: {
+          display: "block"
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal",
         id: "modal"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content"
-      }, "Hello Modal", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "actions"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "change profile picture", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "changeProfilePictureForm"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "change-picture-label"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "changeProfilePictureForm",
+        style: {
+          marginTop: "20%"
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           display: "block",
-          textAlign: "center",
-          marginTop: "20%"
+          textAlign: "center"
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "btn"
@@ -798,11 +808,14 @@ var ProfilePictureModal = /*#__PURE__*/function (_React$Component) {
         name: "files",
         onChange: this.updateProfilePicture
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        style: {
+          marginTop: "20px"
+        },
         type: "button",
-        value: "change",
+        value: "save",
         className: "changeProfilePictureButton",
         onClick: this.handleSubmit
-      }))))));
+      })))))));
     }
   }]);
 
@@ -2043,9 +2056,7 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
         className: "user-show-page"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
         className: "show-page-buttons-top"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.props.logout
-      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.navLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-show-page-posts"
       }, this.profilePicture(), showFollow, this.state.showPosts));
     }
@@ -2129,8 +2140,9 @@ var mstp = function mstp(state) {
     posts: Object.values(state.entities.posts).reverse(),
     users: state.entities.allUsers,
     navLink: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
+      className: "home-button",
       to: "/"
-    }, "Home")
+    })
   };
 };
 

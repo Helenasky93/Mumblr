@@ -14,7 +14,7 @@ const mstp = state => ({
     currentUser: state.entities.users[state.session.id],
     posts: Object.values(state.entities.posts).reverse(),
     users: state.entities.allUsers,
-    navLink: <Link to="/">Home</Link>
+    navLink: <Link className="home-button" to="/"></Link>
 })
 
 const mdtp = dispatch => ({

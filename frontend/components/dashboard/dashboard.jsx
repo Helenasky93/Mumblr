@@ -65,21 +65,24 @@ class Dashboard extends React.Component {
         return (
             <div className='dashboard'>
                 <div className="userInfo">
+                    
                     <ProfilePictureModal onClose={this.toggleModal} show={this.state.show} />
+
+                
 
                     <img className="profile-picture-dashboard" height="100" width="100" src={this.props.currentUser.profile_picture_url || window.default_avatar} alt="profile_pic" />
                     <div className='greetingBox'>
                         <h2>Hi, {(this.props.currentUser.username)}!</h2>
                         <div className="dropdown"> <img className="dropbtn" src={window.user_icon} alt="user_icon"/>
                             <div className="dropdown-content">
-
-                                <button onClick={this.props.logout}>Log Out</button>
+                                <button className="logout-show-page" onClick={this.props.logout}>Log Out</button>
                                 <button className="toggle-button"
                                     id="centered-toggle-button" onClick={e => {
                                     this.toggleModal();
                                 }}>change picture
 
                                 </button>
+
                             
                                 
                             </div>

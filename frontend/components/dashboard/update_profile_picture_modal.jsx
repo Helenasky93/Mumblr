@@ -47,15 +47,17 @@ class ProfilePictureModal extends React.Component {
             return null;
         }
         return(
+            <div className="newPostFormDiv" style={{display:"block"}}>
+
             <div className='modal' id="modal">
                 
 
-                <div className='content'>Hello Modal
+                <div className='content'>
                     <div className='actions'>
-                        <label>change profile picture
-                            <form className="changeProfilePictureForm" >
+                        <label className="change-picture-label">
+                            <form className="changeProfilePictureForm" style={{marginTop:"20%"}}>
                                 <div>
-                                    <div style={{ display: "block", textAlign: "center", marginTop: "20%" }}>
+                                    <div style={{ display: "block", textAlign: "center"}}>
                                         <label > <span className="btn">Select Image</span>
                                         <input style={{ visibility: 'hidden', position: 'absolute' }}  className="form-control" type="file" name="files" onChange={this.updateProfilePicture} />
                                         
@@ -66,7 +68,7 @@ class ProfilePictureModal extends React.Component {
 
                                 </div>
 
-                                <input  type="button" value="change" className="changeProfilePictureButton" onClick={this.handleSubmit}/>
+                                <input style={{marginTop:"20px"}}  type="button" value="save" className="changeProfilePictureButton" onClick={this.handleSubmit}/>
 
                             </form>
 
@@ -75,6 +77,7 @@ class ProfilePictureModal extends React.Component {
                     </div>
                 </div>
 
+            </div>
             </div>
             
         ) 

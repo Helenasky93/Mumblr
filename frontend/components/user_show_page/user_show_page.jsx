@@ -99,8 +99,7 @@ class UserShowPage extends React.Component {
         return(
             <div className="user-show-page">
                 <hgroup className="show-page-buttons-top">
-                    <button onClick={this.props.logout}>Logout</button>
-                    <br/>
+                    {/* <button className="logout-show-page" onClick={this.props.logout}>Logout</button> */}
                     {this.props.navLink}
                 </hgroup>
                 
