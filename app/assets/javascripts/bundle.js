@@ -2033,6 +2033,7 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
 
       if (this.state.user && this.state.user.id !== this.props.currentUser.id) {
         showFollow = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "follow-button",
           onClick: this.handleFollow
         }, this.state.isFollowing ? "Unfollow" : "Follow");
       }
@@ -2040,11 +2041,13 @@ var UserShowPage = /*#__PURE__*/function (_React$Component) {
       ;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-show-page"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
+        className: "show-page-buttons-top"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
-      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.profilePicture(), showFollow), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "show-page-posts"
-      }, this.state.showPosts));
+      }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.navLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "user-show-page-posts"
+      }, this.profilePicture(), showFollow, this.state.showPosts));
     }
   }], [{
     key: "getDerivedStateFromProps",

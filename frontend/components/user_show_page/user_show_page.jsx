@@ -92,25 +92,24 @@ class UserShowPage extends React.Component {
         
         let showFollow = "" 
         if ((this.state.user && this.state.user.id !== this.props.currentUser.id) ) {
-            showFollow = <button onClick={this.handleFollow}>{this.state.isFollowing ? "Unfollow" : "Follow"}</button>
+            showFollow = <button className="follow-button" onClick={this.handleFollow}>{this.state.isFollowing ? "Unfollow" : "Follow"}</button>
         };
         
         
         return(
             <div className="user-show-page">
-                <hgroup>
+                <hgroup className="show-page-buttons-top">
                     <button onClick={this.props.logout}>Logout</button>
                     <br/>
                     {this.props.navLink}
                 </hgroup>
                 
-                <div>
+                <div className="user-show-page-posts">
                     {this.profilePicture()}
                     {showFollow}
-                </div>
-                <div className="show-page-posts">
                     {this.state.showPosts}
                 </div>
+                
                 
             </div >
         )
