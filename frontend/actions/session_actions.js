@@ -57,7 +57,6 @@ export const updateProfilePicture = user => dispatch => {
         return dispatch(receiveCurrentUser(user))
     },
     err => {
-        console.error('ERROR SOUP',err)
         return (dispatch(receiveSessionErrors(err.responseJSON)))
     })
 };
