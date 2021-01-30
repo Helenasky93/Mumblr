@@ -52,7 +52,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate'
-  gem "aws-sdk-s3"
+  gem 'aws-sdk-s3'
 end
 
 group :test do
