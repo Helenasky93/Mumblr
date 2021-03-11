@@ -2,7 +2,7 @@
 [Link to live website](https://mumblr.herokuapp.com/#/login)
 
 ## The thought process behind the project
-I decided to base my froject on and take inspiration from Tumblr because its a website that is very dear to my heart. Growing up it was a place where I could express whatever was on my mind, share thoughts, interesting media, memes, art, ideas and find like minded people, it was a way for my to find community online.
+I decided to base my project on and take inspiration from Tumblr because it's a website that is very dear to my heart. Growing up it was a place where I could express whatever was on my mind, share thoughts, interesting media, memes, art, ideas and find like minded people, it was a way for my to find community online.
 
 On the techincal side I believe Tumblr is a very good example of a dynamic app which has basic CRUD functionality, and since that aligned with the skills I spent countless hours working to master, I though it was the perfect website to try to recreate/make my own version of it.
 
@@ -10,6 +10,7 @@ It was pretty intimidating to start this project given that it has so many movin
 
 ## Basic Functionality
 Like I mentioned before, I mainly focused on implementing a CRUD functionality, and as a user you are able to create, view, update and destroy the posts that you make. These posts can be of three different kinds; video, photo or text, and for this I made use of Amazon web Services in order to be able to upload the files and display them in the corresponding component.
+
 
 You are also able to like other user's posts and follow said users, when you follow a user, their posts populate your feed along with your own and they are sorted by newest first. Lastly you are able to change your profile picture if you want.
 
