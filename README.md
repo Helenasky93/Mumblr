@@ -10,9 +10,10 @@ It was pretty intimidating to start this project given that it has so many movin
 
 ## Basic Functionality
 Like I mentioned before, I mainly focused on implementing a CRUD functionality, and as a user you are able to create, view, update and destroy the posts that you make. These posts can be of three different kinds; video, photo or text, and for this I made use of Amazon web Services in order to be able to upload the files and display them in the corresponding component.
-
+![alt text](https://github.com/Helenasky93/Mumblr/blob/master/app/assets/images/Screen%20Shot%202021-03-11%20at%2010.36.39%20AM.png")
 
 You are also able to like other user's posts and follow said users, when you follow a user, their posts populate your feed along with your own and they are sorted by newest first. Lastly you are able to change your profile picture if you want.
+![alt text](https://github.com/Helenasky93/Mumblr/blob/master/app/assets/images/Screen%20Shot%202021-03-11%20at%2010.43.56%20AM.png")
 
 One of the features that I'm ost proud of is the modal I implemented to both create and update a post, and since I reused the same blueprint, switching the form type accordingly, I believe it is a great example of dry code:
 
