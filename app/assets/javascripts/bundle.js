@@ -440,6 +440,9 @@ var App = function App() {
     path: "/users/:id",
     component: _components_user_show_page_user_show_page_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["AuthRoute"], {
+    path: "/demologin",
+    component: _components_session_form_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["AuthRoute"], {
     path: "/login",
     component: _components_session_form_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["AuthRoute"], {
@@ -950,6 +953,14 @@ var Greeting = function Greeting(_ref) {
       to: "/login",
       className: "login"
     }, "Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: {
+        pathname: '/demologin',
+        state: {
+          demo: true
+        }
+      },
+      className: "demoLoginButton"
+    }, "Demo Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "/signup",
       className: "signup"
     }, "Sign up!"))));
@@ -1705,11 +1716,22 @@ var loginSessionForm = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, loginSessionForm);
 
     _this = _super.call(this, props);
-    _this.state = {
-      username: '',
-      password: '',
-      email: ''
-    };
+
+    if (props.location.state && props.location.state.demo) {
+      _this.state = {
+        username: 'demo',
+        password: 'demodemo',
+        email: 'demo@mail.com'
+      };
+    } else {
+      _this.state = {
+        username: '',
+        password: '',
+        email: ''
+      };
+    }
+
+    console.log(_this.state);
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -1727,6 +1749,7 @@ var loginSessionForm = /*#__PURE__*/function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
+      console.log(this.state);
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }

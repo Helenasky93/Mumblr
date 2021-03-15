@@ -1,18 +1,30 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 
 class loginSessionForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            username: '',
-            password: '',
-            email: ''
-        };
+        if(props.location.state && props.location.state.demo) {
+            this.state = {
+                username: 'demo',
+                password: 'demodemo',
+                email: 'demo@mail.com'
+            }
+        } else {
+            this.state = {
+                username:'',
+                password: '',
+                email: ''
+            };
+
+        }
+             
+             console.log(this.state);   
         this.handleSubmit = this.handleSubmit.bind(this);
+        
     }
 
     update(field) {
@@ -23,6 +35,7 @@ class loginSessionForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        console.log(this.state);
         const user = Object.assign({}, this.state);
         this.props.processForm(user);
     }

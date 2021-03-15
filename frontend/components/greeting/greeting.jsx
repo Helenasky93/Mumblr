@@ -12,7 +12,11 @@ const Greeting = ({currentUser, logout}) => {
             <div className="authLinks">
                
                 <Link to='/login' className='login'>Login</Link>
-                
+                <Link to={{
+                    pathname:'/demologin',
+                    state: {demo: true}
+                }}
+                 className="demoLoginButton">Demo Login</Link>
                 <Link to='/signup' className='signup'>Sign up!</Link>
               
             </div>

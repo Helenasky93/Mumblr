@@ -13,6 +13,8 @@ const App = () => {
         <div>
             <GreetingContainer />
             <ProtectedRoute path='/users/:id' component={UserShowPage}/>
+            <AuthRoute path="/demologin" component={LoginFormContainer} />
+
             <AuthRoute path="/login" component={LoginFormContainer} />
             <AuthRoute path="/signup" component={SignupFormContainer} />
             <ProtectedRoute exact path='/' component={Dashboard}/>

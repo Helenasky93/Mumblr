@@ -94,8 +94,10 @@ input:focus {
     outline-color: darkmagenta;
 }
 
-.loginButton {
-    display: block;
+.loginButton, .demoLoginButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: solid;
     margin: 0;
     width: 100px;
@@ -112,7 +114,9 @@ input:focus {
     background-color: #BA55D3;
 }
 .signupButton {
-     display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: solid;
     margin: 0;
     width: 100px;
