@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html prefix="og: https://ogp.me/ns#">
 
-  <meta property="og:title" content="Project Title" />
+
+
+  <head>
+    <meta property="og:title" content="Project Title" />
      <meta name="image" property="og:image" content="<%= image_url('mumblr_screen_shot.png') %>"/>
      <meta name="description" property="og:description"
        content="project inspired by tumblr"
@@ -9,9 +12,11 @@
      <meta property="og:url"
        content="https://mumblr.herokuapp.com/#/login"
      />
+    <link rel="apple-touch-icon" sizes="180x180" href="<%=image_url('apple-touch-icon.png')%>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%=image_url('favicon-32x32.png')%>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%=image_url('favicon-16x16.png')%>">
+    <link rel="manifest" href="/site.webmanifest">
 
-
-  <head>
     <title>Mumblr</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
